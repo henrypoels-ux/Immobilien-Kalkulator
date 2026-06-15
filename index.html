@@ -12,106 +12,68 @@
   --bg:#f4f5f7; --surface:#ffffff; --surface-2:#fafbfc; --border:#e6e8ec;
   --text:#1a1d23; --muted:#6b7280; --faint:#9aa1ab;
   --accent:#2563eb; --accent-soft:#eaf0fe;
-  --green:#16a34a; --green-soft:#e7f6ec; --amber:#d97706; --amber-soft:#fdf2e3; --red:#dc2626; --red-soft:#fbeaea;
+  --green:#16a34a; --amber:#d97706; --red:#dc2626;
   --c1:#2563eb; --c2:#16a34a; --c3:#d97706; --c4:#7c3aed; --c5:#0d9488; --c6:#dc2626; --c7:#64748b;
   --shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
   --shadow-lg:0 4px 24px rgba(16,24,40,.10);
-  --radius:14px; --radius-sm:9px;
+  --radius:14px;
 }
 html[data-theme="dark"]{
   --bg:#0f1115; --surface:#171a21; --surface-2:#1d212a; --border:#2a2f3a;
   --text:#e8eaed; --muted:#9aa1ab; --faint:#6b7280;
   --accent:#60a5fa; --accent-soft:#1b2740;
-  --green:#4ade80; --green-soft:#143020; --amber:#fbbf24; --amber-soft:#332408; --red:#f87171; --red-soft:#3a1717;
+  --green:#4ade80; --amber:#fbbf24; --red:#f87171;
   --c1:#60a5fa; --c2:#4ade80; --c3:#fbbf24; --c4:#a78bfa; --c5:#2dd4bf; --c6:#f87171; --c7:#94a3b8;
   --shadow:0 1px 2px rgba(0,0,0,.3); --shadow-lg:0 8px 30px rgba(0,0,0,.45);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{
-  background:var(--bg); color:var(--text);
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  font-size:14px; line-height:1.45; -webkit-font-smoothing:antialiased;
-}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.01em}
 a{color:var(--accent);text-decoration:none}
 button{font-family:inherit;cursor:pointer}
 input,select{font-family:inherit;font-size:14px;color:var(--text)}
-
-/* ---------- layout ---------- */
-.topbar{
-  position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:14px;
-  padding:11px 22px;background:var(--surface);border-bottom:1px solid var(--border);
-}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:14px;padding:11px 22px;background:var(--surface);border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-.02em;white-space:nowrap}
 .logo .mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--c4));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
 .topbar .spacer{flex:1}
-.prop-select{
-  display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);
-  border-radius:10px;padding:5px 6px 5px 12px;
-}
+.prop-select{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:5px 6px 5px 12px}
 .prop-select select{border:none;background:transparent;font-weight:600;font-size:14px;outline:none;max-width:240px}
-.icon-btn{
-  display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--border);
-  color:var(--text);border-radius:9px;padding:7px 12px;font-size:13px;font-weight:500;transition:.15s;
-}
+.icon-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:7px 12px;font-size:13px;font-weight:500;transition:.15s}
 .icon-btn:hover{border-color:var(--accent);color:var(--accent)}
 .icon-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .icon-btn.primary:hover{filter:brightness(1.05);color:#fff}
 .icon-btn svg{width:15px;height:15px}
-
 .shell{display:flex;min-height:calc(100vh - 57px)}
-.nav{
-  width:208px;flex-shrink:0;padding:18px 12px;border-right:1px solid var(--border);background:var(--surface);
-  position:sticky;top:57px;height:calc(100vh - 57px);overflow:auto;
-}
-.nav-item{
-  display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;color:var(--muted);
-  font-weight:500;font-size:13.5px;margin-bottom:2px;transition:.12s;border:1px solid transparent;
-}
+.nav{width:208px;flex-shrink:0;padding:18px 12px;border-right:1px solid var(--border);background:var(--surface);position:sticky;top:57px;height:calc(100vh - 57px);overflow:auto}
+.nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;color:var(--muted);font-weight:500;font-size:13.5px;margin-bottom:2px;transition:.12s;border:1px solid transparent}
 .nav-item:hover{background:var(--surface-2);color:var(--text)}
-.nav-item.active{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.nav-item.active{background:var(--accent-soft);color:var(--accent)}
 .nav-item svg{width:17px;height:17px;flex-shrink:0}
 .nav-sep{height:1px;background:var(--border);margin:12px 6px}
 .nav-foot{font-size:11px;color:var(--faint);padding:10px 12px;line-height:1.5}
-
 .main{flex:1;padding:26px 30px 70px;max-width:1280px;width:100%;margin:0 auto}
 .view{display:none;animation:fade .25s ease}
 .view.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-
 .page-head{margin-bottom:20px}
 .page-head h2{font-size:21px}
 .page-head p{margin:4px 0 0;color:var(--muted);font-size:13.5px;max-width:780px}
-
-/* ---------- cards ---------- */
 .grid{display:grid;gap:16px}
-.card{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:18px 18px 16px;box-shadow:var(--shadow);
-}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 18px 16px;box-shadow:var(--shadow)}
 .card > h3{font-size:14px;display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .card > h3 .dot{width:8px;height:8px;border-radius:3px;background:var(--accent)}
 .card .sub{color:var(--muted);font-size:12px;font-weight:400;margin-left:auto}
-
-/* ---------- forms ---------- */
 .field{margin-bottom:13px}
 .field:last-child{margin-bottom:0}
 .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:500}
-.field .inp{
-  display:flex;align-items:center;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;
-  overflow:hidden;transition:.12s;
-}
+.field .inp{display:flex;align-items:center;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;overflow:hidden;transition:.12s}
 .field .inp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-.field .inp input,.field .inp select{
-  border:none;background:transparent;outline:none;padding:9px 11px;width:100%;font-size:14px;font-weight:500;
-}
+.field .inp input,.field .inp select{border:none;background:transparent;outline:none;padding:9px 11px;width:100%;font-size:14px;font-weight:500;text-align:left}
 .field .inp .unit{padding:0 11px;color:var(--faint);font-size:12.5px;white-space:nowrap;border-left:1px solid var(--border);height:38px;display:flex;align-items:center}
 .field .hint{font-size:11px;color:var(--faint);margin-top:4px}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-
-/* computed summary rows */
 .sumrow{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px}
 .sumrow:last-child{border-bottom:none}
 .sumrow .k{color:var(--muted)}
@@ -119,8 +81,6 @@ input,select{font-family:inherit;font-size:14px;color:var(--text)}
 .sumrow.total{border-top:1.5px solid var(--border);border-bottom:none;margin-top:4px;padding-top:10px}
 .sumrow.total .k{color:var(--text);font-weight:600}
 .sumrow.total .v{font-size:15px;color:var(--accent)}
-
-/* investitionen table */
 table.inv{width:100%;border-collapse:collapse;font-size:13px}
 table.inv th{text-align:left;color:var(--muted);font-weight:500;font-size:11.5px;padding:4px 6px;border-bottom:1px solid var(--border)}
 table.inv td{padding:4px 4px}
@@ -130,23 +90,16 @@ table.inv .del{background:none;border:none;color:var(--faint);font-size:16px;pad
 table.inv .del:hover{color:var(--red)}
 .add-row{margin-top:10px;font-size:12.5px;color:var(--accent);background:none;border:1px dashed var(--border);border-radius:8px;padding:7px 12px;width:100%}
 .add-row:hover{border-color:var(--accent)}
-
-/* ---------- KPI tiles ---------- */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
-.kpi{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;position:relative;overflow:hidden;box-shadow:var(--shadow);
-}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
 .kpi .lab{font-size:12px;color:var(--muted);font-weight:500;margin-bottom:7px;display:flex;align-items:center;gap:6px}
 .kpi .val{font-size:25px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1}
 .kpi .note{font-size:11.5px;color:var(--faint);margin-top:6px}
 .kpi .ampel{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.kpi.lg .val{font-size:28px}
 .a-green{background:var(--green)} .a-amber{background:var(--amber)} .a-red{background:var(--red)} .a-none{background:var(--faint)}
 .val.green{color:var(--green)} .val.amber{color:var(--amber)} .val.red{color:var(--red)}
 .kpi-stripe{position:absolute;left:0;top:0;bottom:0;width:3px}
 .kpi-stripe.green{background:var(--green)} .kpi-stripe.amber{background:var(--amber)} .kpi-stripe.red{background:var(--red)}
-
-/* cashflow waterfall list */
 .cf-list{font-size:13.5px}
 .cf-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed var(--border)}
 .cf-item .bar{flex:1;height:6px;border-radius:3px;margin:0 12px;background:var(--surface-2);position:relative;overflow:hidden;max-width:240px}
@@ -154,20 +107,13 @@ table.inv .del:hover{color:var(--red)}
 .cf-item .amt{font-weight:600;font-variant-numeric:tabular-nums;min-width:78px;text-align:right}
 .cf-item.res{border-top:1.5px solid var(--border);border-bottom:none;margin-top:5px;padding-top:11px;font-weight:600}
 .pos{color:var(--green)} .neg{color:var(--red)}
-
-/* charts */
 .chart-wrap{width:100%;position:relative}
 .chart-wrap svg{width:100%;height:auto;display:block;overflow:visible}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend span i{width:11px;height:11px;border-radius:3px;display:inline-block}
-.chart-tip{
-  position:absolute;pointer-events:none;background:var(--text);color:var(--surface);font-size:11.5px;
-  padding:7px 10px;border-radius:8px;box-shadow:var(--shadow-lg);opacity:0;transition:opacity .1s;white-space:nowrap;z-index:5;line-height:1.5;
-}
+.chart-tip{position:absolute;pointer-events:none;background:var(--text);color:var(--surface);font-size:11.5px;padding:7px 10px;border-radius:8px;box-shadow:var(--shadow-lg);opacity:0;transition:opacity .1s;white-space:nowrap;z-index:5;line-height:1.5}
 .chart-tip b{font-weight:600}
-
-/* sliders */
 .slider-row{margin-bottom:16px}
 .slider-row .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
 .slider-row .top label{font-size:13px;font-weight:500}
@@ -176,54 +122,40 @@ input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--surface);box-shadow:var(--shadow)}
 input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--surface)}
 .scn-delta{font-size:11.5px;font-weight:600;margin-top:5px}
-
-/* time-series table */
 .tbl-scroll{overflow:auto;border:1px solid var(--border);border-radius:10px}
 table.ts{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
 table.ts th,table.ts td{padding:7px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--border)}
 table.ts th{position:sticky;top:0;background:var(--surface-2);color:var(--muted);font-weight:500;text-align:right;z-index:1}
 table.ts th:first-child,table.ts td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);font-weight:600}
 table.ts tr:hover td{background:var(--surface-2)}
-
-/* bank */
 .bank-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
 .bank-block h4{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);margin-bottom:10px}
-
-/* misc */
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
-.chip{font-size:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:20px;padding:5px 12px;color:var(--muted)}
-.chip b{color:var(--text)}
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--text);color:var(--surface);padding:11px 20px;border-radius:10px;font-size:13px;font-weight:500;
-  box-shadow:var(--shadow-lg);opacity:0;transition:.25s;z-index:100;pointer-events:none;
-}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--surface);padding:11px 20px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);opacity:0;transition:.25s;z-index:100;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .modal-bg{position:fixed;inset:0;background:rgba(10,12,16,.45);display:none;align-items:center;justify-content:center;z-index:90}
 .modal-bg.show{display:flex}
-.modal{background:var(--surface);border-radius:16px;padding:24px;width:380px;max-width:92vw;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+.modal{background:var(--surface);border-radius:16px;padding:24px;width:400px;max-width:92vw;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
 .modal h3{margin-bottom:14px;font-size:16px}
-.modal .inp{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;margin-bottom:16px}
+.modal .inp{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;margin-bottom:14px}
 .modal .inp input{border:none;background:transparent;outline:none;padding:10px 12px;width:100%}
+.modal .choice{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.modal .choice label{display:flex;gap:9px;align-items:flex-start;padding:11px 13px;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:13px}
+.modal .choice label:hover{border-color:var(--accent)}
+.modal .choice b{font-weight:600}
+.modal .choice small{color:var(--muted);display:block;font-weight:400}
 .modal-actions{display:flex;gap:10px;justify-content:flex-end}
 .muted-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:9px 16px;font-weight:500}
 .year-pill{display:inline-flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px 8px 6px 14px;box-shadow:var(--shadow)}
 .year-pill input[type=range]{width:200px}
 .disc{font-size:11px;color:var(--faint);margin-top:30px;border-top:1px solid var(--border);padding-top:14px;line-height:1.6}
-
-/* segmented control (Mieteingabe-Art) */
 .seg{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px}
 .seg button{flex:1;border:none;background:transparent;color:var(--muted);font-size:12.5px;font-weight:600;padding:9px 8px;border-radius:7px;white-space:nowrap;transition:.12s}
 .seg button.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow)}
-
-/* sub-tabs (Eingaben-Sektionen) */
 .subtabs{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 8px;margin-bottom:16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .subtabs::-webkit-scrollbar{display:none}
 .subtab{flex-shrink:0;padding:9px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:13px;font-weight:600;white-space:nowrap;transition:.12s}
 .subtab:hover{border-color:var(--accent);color:var(--accent)}
 .subtab.active{background:var(--accent);border-color:var(--accent);color:#fff}
-
-/* live result strip in Eingaben */
 .mini-kpis{display:flex;gap:10px;overflow-x:auto;margin-bottom:18px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .mini-kpis::-webkit-scrollbar{display:none}
 .mini-kpi{flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:9px 15px;min-width:118px;position:relative;overflow:hidden}
@@ -231,39 +163,27 @@ table.ts tr:hover td{background:var(--surface-2)}
 .mini-kpi .v{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:3px;letter-spacing:-.01em}
 .mini-kpi .v.green{color:var(--green)} .mini-kpi .v.amber{color:var(--amber)} .mini-kpi .v.red{color:var(--red)}
 .mini-kpi .s{position:absolute;left:0;top:0;bottom:0;width:3px}
-
-/* topbar overflow menu (mobile) */
 #btnMenu{display:none}
 .logo .logotext{display:inline}
 .topbar-actions{display:flex;align-items:center;gap:10px}
-
-/* bottom navigation (mobile) */
 .bottomnav{display:none}
-
 @media (max-width:980px){
   .nav{display:none}
   .main{padding:20px 18px 90px;max-width:100%}
-  .bottomnav{
-    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--surface);
-    border-top:1px solid var(--border);justify-content:space-around;align-items:stretch;
-    padding:6px 2px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -2px 14px rgba(0,0,0,.06);
-  }
+  .bottomnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--surface);border-top:1px solid var(--border);justify-content:space-around;align-items:stretch;padding:6px 2px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -2px 14px rgba(0,0,0,.06)}
   .bottomnav .bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 1px;color:var(--muted);font-size:9.5px;font-weight:600;border:none;background:none;border-radius:9px}
   .bottomnav .bn svg{width:21px;height:21px}
   .bottomnav .bn.active{color:var(--accent)}
   .bank-grid{grid-template-columns:1fr}
   .field-row-3{grid-template-columns:1fr}
 }
-
 @media (max-width:760px){
   .topbar{padding:max(9px,env(safe-area-inset-top,0px)) 12px 9px;gap:8px;flex-wrap:nowrap}
   .logo .logotext{display:none}
   .prop-select{flex:1;min-width:0;padding-left:10px}
   .prop-select select{max-width:none;width:100%}
   #btnMenu{display:inline-flex}
-  .topbar-actions{position:fixed;top:52px;right:10px;flex-direction:column;align-items:stretch;gap:6px;
-    background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);
-    padding:9px;z-index:80;min-width:184px;display:none}
+  .topbar-actions{position:fixed;top:52px;right:10px;flex-direction:column;align-items:stretch;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);padding:9px;z-index:80;min-width:184px;display:none}
   .topbar-actions.open{display:flex}
   .topbar-actions .icon-btn{justify-content:flex-start;width:100%;padding:11px 13px;font-size:14px}
   .topbar-actions .icon-btn .btn-lbl{display:inline}
@@ -280,7 +200,6 @@ table.ts tr:hover td{background:var(--surface-2)}
   table.ts th,table.ts td{padding:8px 9px}
 }
 .btn-lbl{display:none}
-
 @media print{
   .topbar,.nav,.bottomnav,.disc{display:none}
   .view:not(#view-bank){display:none!important}
@@ -323,11 +242,10 @@ table.ts tr:hover td{background:var(--surface-2)}
     <div class="nav-sep"></div>
     <div class="nav-item" data-view="bank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M9 14v3M15 14v3"/></svg> Bankgespräch</div>
     <div class="nav-item" data-view="konfig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.6 14H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.3 8a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 4.3h.1A1.6 1.6 0 0 0 11 2.6V2.5a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 4.3a1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8v.1a1.6 1.6 0 0 0 1.4 1.6h.1a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.4 1z"/></svg> Konfiguration</div>
-    <div class="nav-foot">Nachbau des immocation Cockpit-Kalkulationstools.<br>Lokale Speicherung im Browser.</div>
+    <div class="nav-foot">Lokale Speicherung im Browser.</div>
   </nav>
 
   <main class="main">
-    <!-- DASHBOARD -->
     <section class="view active" id="view-dashboard">
       <div class="page-head"><h2 id="dashTitle">Dashboard</h2><p id="dashSub"></p></div>
       <h3 style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:600">KENNZAHLEN HEUTE</h3>
@@ -343,7 +261,6 @@ table.ts tr:hover td{background:var(--surface-2)}
       <div class="kpi-grid" id="kpiFuture"></div>
     </section>
 
-    <!-- EINGABEN -->
     <section class="view" id="view-eingaben">
       <div class="page-head"><h2>Eingaben</h2><p>Wähle einen Bereich. Kennzahlen oben aktualisieren sich live.</p></div>
       <div class="mini-kpis" id="einKpiStrip"></div>
@@ -351,7 +268,6 @@ table.ts tr:hover td{background:var(--surface-2)}
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start" id="inputCards"></div>
     </section>
 
-    <!-- VERLAUF -->
     <section class="view" id="view-verlauf">
       <div class="page-head"><h2>Verlauf &amp; Diagramme</h2><p>Entwicklung von Vermögen, Cashflow, Restschuld und Miete über die Jahre.</p></div>
       <div class="grid" style="grid-template-columns:1fr 1fr">
@@ -364,9 +280,8 @@ table.ts tr:hover td{background:var(--surface-2)}
       <div class="card" style="margin-top:16px"><h3><span class="dot"></span>Tabelle: Kennzahlen im Verlauf</h3><div class="tbl-scroll" id="tsTable"></div></div>
     </section>
 
-    <!-- SZENARIO -->
     <section class="view" id="view-szenario">
-      <div class="page-head"><h2>Szenarien simulieren</h2><p>Verschiebe die Regler, um Auswirkungen auf Rendite und Cashflow live zu sehen — ohne deine gespeicherten Werte zu verändern.</p></div>
+      <div class="page-head"><h2>Szenarien simulieren</h2><p>Die Regler beziehen sich auf deine eingegebenen Werte. Verschieben = Auswirkung sofort sehen, ohne deine gespeicherten Daten zu ändern.</p></div>
       <div class="grid" style="grid-template-columns:340px 1fr;align-items:start">
         <div class="card">
           <h3><span class="dot"></span>Regler</h3>
@@ -384,7 +299,6 @@ table.ts tr:hover td{background:var(--surface-2)}
       </div>
     </section>
 
-    <!-- BANK -->
     <section class="view" id="view-bank">
       <div class="page-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px">
         <div><h2>Bankgespräch</h2><p id="bankSub">Investitionsübersicht zum Ausdrucken für deine Bank.</p></div>
@@ -394,7 +308,6 @@ table.ts tr:hover td{background:var(--surface-2)}
       <div class="bank-grid" id="bankBody"></div>
     </section>
 
-    <!-- KONFIG -->
     <section class="view" id="view-konfig">
       <div class="page-head"><h2>Konfiguration</h2><p>Schwellwerte für die Ampelfarben der Kennzahlen. Grün = gut, Gelb = mittel, Rot = kritisch.</p></div>
       <div class="card" style="max-width:560px"><div id="konfigBody"></div>
@@ -403,7 +316,7 @@ table.ts tr:hover td{background:var(--surface-2)}
       <div class="card" style="max-width:560px;margin-top:16px"><h3><span class="dot"></span>GitHub-Synchronisation <span class="sub">privater Gist</span></h3><div id="ghBody"></div></div>
     </section>
 
-    <div class="disc">Keine Gewähr für die Richtigkeit der Angaben. Dieses Tool ersetzt keine fundierte Rechts-, Steuer- oder Finanzberatung. Nachbau des immocation Kalkulationstools (Cockpit) zu eigenen Zwecken.</div>
+    <div class="disc">Keine Gewähr für die Richtigkeit der Angaben. Dieses Tool ersetzt keine fundierte Rechts-, Steuer- oder Finanzberatung.</div>
   </main>
 </div>
 
@@ -417,12 +330,10 @@ table.ts tr:hover td{background:var(--surface-2)}
 </nav>
 
 <div class="toast" id="toast"></div>
-<div class="modal-bg" id="modalBg"><div class="modal"><h3 id="modalTitle">Name</h3><div class="inp"><input id="modalInput" type="text"></div><div class="modal-actions"><button class="muted-btn" id="modalCancel">Abbrechen</button><button class="icon-btn primary" id="modalOk">OK</button></div></div></div>
+<div class="modal-bg" id="modalBg"><div class="modal"><h3 id="modalTitle">Name</h3><div id="modalBody"></div><div class="modal-actions"><button class="muted-btn" id="modalCancel">Abbrechen</button><button class="icon-btn primary" id="modalOk">OK</button></div></div></div>
 
 <script>
-/* =================================================================
-   BERECHNUNGS-ENGINE  (verifiziert gegen Excel: 34/34 Werte exakt)
-   ================================================================= */
+/* ============ BERECHNUNGS-ENGINE (verifiziert gegen Excel) ============ */
 const DEFAULTS = {
   address:'Musterstr. 11, 12345 Musterstadt', kuerzel:'', buyDate:'2025-01-01',
   wohnflaeche:31, stellplaetze:1, kaufpreis:55000,
@@ -436,14 +347,14 @@ const DEFAULTS = {
   hausgeldUml:90, grundsteuer:9, sonstigesUml:0,
   hausgeldNichtUml:49, wegRuecklage:23, instandQm:10, kalkMietausfall:3, sonstigesNichtUml:0,
   kostensteigerung:2, mietsteigerung:3, wertsteigerung:2,
-  dl1AnteilPct:80, dl1Zins:3.5, dl1Tilgung:2,
-  dl2Summe:10000, dl2Zins:2, dl2Tilgung:8,
+  dl1AnteilPct:80, dl1Modus:'pct', dl1Betrag:80, dl1Zins:3.5, dl1Tilgung:2, dl1Zinsbindung:0, dl1Anschlusszins:4,
+  dl2Summe:10000, dl2Aktiv:true, dl2Modus:'abs', dl2Betrag:10000, dl2Zins:2, dl2Tilgung:8, dl2Zinsbindung:0, dl2Anschlusszins:4,
   hochrechnungJahr:2034, jahre:50,
-  sonder1:[], sonder2:[], zinsAend1:[], zinsAend2:[],
+  sonder1:[], sonder2:[],
 };
-const N = v => (typeof v==='number'?v:(parseFloat(String(v).replace(',','.'))||0));
+const N = v => (typeof v==='number'?v:(parseFloat(String(v).replace(/\./g,'').replace(',','.').replace(/[^0-9.\-]/g,''))||0));
 const sum = a => a.reduce((x,y)=>x+y,0);
-
+function _za(bindung, anschluss){const arr=[];const b=Math.round(N(bindung));if(b>0&&anschluss!=null&&anschluss!=='')arr[b]=N(anschluss);return arr;}
 function amortize(principal, zins, tilg, years, sonder=[], zinsAend=[]){
   const annuitaet = principal*(zins+tilg); const rows=[]; let restAnfang=principal, rate=zins;
   for(let t=0;t<years;t++){
@@ -490,7 +401,14 @@ function calc(input){
   const nichtUmlSumme=N(inp.hausgeldNichtUml)+instandEigen+kalkMietausfallEur+N(inp.sonstigesNichtUml);
   const bewirtGesamt=umlSumme+nichtUmlSumme;
   const empfohleneInstand=((gebAnteil*KP)*(1/80*1.5)-12*N(inp.wegRuecklage))/WF;
-  const dl1=inp.dl1AnteilPct/100*KP, dl2=N(inp.dl2Summe);
+  // --- Darlehen (absolut oder % vom Kaufpreis; Darlehen 2 abschaltbar) ---
+  const dl1Modus=inp.dl1Modus||'pct';
+  const dl1Betrag=inp.dl1Betrag!=null?N(inp.dl1Betrag):N(inp.dl1AnteilPct);
+  const dl1=dl1Modus==='abs'?dl1Betrag:dl1Betrag/100*KP;
+  const dl2Aktiv=inp.dl2Aktiv!==false;
+  const dl2Modus=inp.dl2Modus||'abs';
+  const dl2Betrag=inp.dl2Betrag!=null?N(inp.dl2Betrag):N(inp.dl2Summe);
+  const dl2=!dl2Aktiv?0:(dl2Modus==='abs'?dl2Betrag:dl2Betrag/100*KP);
   const dlGesamt=dl1+dl2; const ek=gesamtInvest-dlGesamt;
   const z1=inp.dl1Zins/100,t1=inp.dl1Tilgung/100,z2=inp.dl2Zins/100,t2=inp.dl2Tilgung/100;
   const kd1=(z1+t1)*dl1/12, kd2=(z2+t2)*dl2/12;
@@ -499,8 +417,10 @@ function calc(input){
   const kdGesamt=kd1+kd2;
   const afaJahr=inp.afaSatz/100*afaBasis, afaMonat=afaJahr/12;
   const years=inp.jahre||50;
-  const a1=amortize(dl1,z1,t1,years,inp.sonder1,inp.zinsAend1);
-  const a2=amortize(dl2,z2,t2,years,inp.sonder2,inp.zinsAend2);
+  const za1=_za(inp.dl1Zinsbindung,inp.dl1Anschlusszins);
+  const za2=_za(inp.dl2Zinsbindung,inp.dl2Anschlusszins);
+  const a1=amortize(dl1,z1,t1,years,inp.sonder1,za1);
+  const a2=amortize(dl2,z2,t2,years,inp.sonder2,za2);
   const series=[]; let kumAfa=0;
   for(let t=0;t<years;t++){
     const nkm=nettokaltmiete*Math.pow(1+inp.mietsteigerung/100,t);
@@ -539,7 +459,7 @@ function calc(input){
   const vermZuwachsOhneWert=vermZuwachs-wertImJahr0;
   const ekRendite=ek>0?vermZuwachs/ek:null;
   const ekRenditeOhneWert=ek>0?vermZuwachsOhneWert/ek:null;
-  const vollI=volltilgungJahr(a1,buyYear), vollII=volltilgungJahr(a2,buyYear);
+  const vollI=volltilgungJahr(a1,buyYear), vollII=dl2?volltilgungJahr(a2,buyYear):null;
   let kumCf=0,breakEven=null;
   for(const s of series){kumCf+=s.cfNachSteuerMonat*12; if(breakEven===null&&kumCf>=0)breakEven=s.jahr;}
   const ty=Math.max(0,Math.min(years-1,(inp.hochrechnungJahr|0)-buyYear));
@@ -559,33 +479,54 @@ function calc(input){
     afaBasis,gesamtInvest,
     miete:{kaltGesamt,nettokaltmiete,umlSumme,warmmiete},
     bewirt:{umlSumme,instandEigen,kalkMietausfallEur,nichtUmlSumme,gesamt:bewirtGesamt,empfohleneInstand,hausgeldNichtUml:N(inp.hausgeldNichtUml),sonstigesNichtUml:N(inp.sonstigesNichtUml)},
-    fin:{dl1,dl2,dlGesamt,ek,zinsGew,tilgGew,kd1,kd2,kdGesamt,vollI,vollII},
+    fin:{dl1,dl2,dl2Aktiv,dlGesamt,ek,zinsGew,tilgGew,kd1,kd2,kdGesamt,vollI,vollII},
     afa:{jahr:afaJahr,monat:afaMonat},
     kpiNow:{nkmPa,brutto,faktor,netto,warmmiete,bewirtGesamt,cfZins,cfTilg,cfOperativ,zvCf0,steuer0,cfNachSteuer,vermZuwachs,vermZuwachsOhneWert,ekRendite,ekRenditeOhneWert,breakEven},
     kpiFuture:{ty,jahr:buyYear+ty,nkm:sf.nkm,nkmPa:sf.nkm*12,wm:sf.wm,wert:sf.wertEnde,wertProQm:sf.wertEnde/WF,brutto:fBrutto,cfOperativ:fCfOperativ,cfNachSteuer:fCfNachSteuer,steuer:fSteuer,restschuld:sf.restEnde,nettovermoegen:sf.wertEnde-sf.restEnde,zinsBreakEven,fZins,fTilg,fBewirt},
     series};
 }
 
-/* =================================================================
-   FORMAT-HELPER
-   ================================================================= */
+/* ============ FORMAT-HELFER ============ */
 const fmtEur=(v,d=0)=>(v==null||isNaN(v))?'–':new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
 const fmtPct=(v,d=1)=>(v==null||isNaN(v))?'–':new Intl.NumberFormat('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v*100)+' %';
 const fmtNum=(v,d=0)=>(v==null||isNaN(v))?'–':new Intl.NumberFormat('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
+function parseDE(s){if(typeof s==='number')return s;if(s==null)return 0;s=String(s).replace(/\s/g,'').replace(/\./g,'').replace(',','.').replace(/[^0-9.\-]/g,'');const n=parseFloat(s);return isNaN(n)?0:n;}
+function groupDE(d){return String(d).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function fmtFixed(v,dec){const n=N(v);const s=Math.abs(n).toFixed(dec).split('.');let o=groupDE(s[0]);if(dec>0)o+=','+s[1];return (n<0?'-':'')+o;}
+function fmtTrim(v,grp){const n=N(v);let s=(Math.round(Math.abs(n)*100)/100).toString();let p=s.split('.');let o=grp?groupDE(p[0]):p[0];if(p[1])o+=','+p[1];return (n<0?'-':'')+o;}
+const FMT={eur:{dec:2,grp:true,init:v=>fmtFixed(v,2)},pct:{dec:2,grp:false,init:v=>fmtTrim(v,false)},qm:{dec:2,grp:false,init:v=>fmtTrim(v,false)},int:{dec:0,grp:false,init:v=>String(Math.round(N(v)))},num:{dec:2,grp:true,init:v=>fmtTrim(v,true)}};
+function liveFmt(raw,cfg){
+  const neg=String(raw).trim()[0]==='-';
+  let s=String(raw).replace(/[^0-9,]/g,'');
+  if(cfg.dec===0)s=s.replace(/,/g,'');
+  const parts=s.split(',');
+  let ip=(parts[0]||'').replace(/^0+(?=\d)/,'');
+  let dp=parts.length>1?parts.slice(1).join('').slice(0,cfg.dec):null;
+  let o=cfg.grp?groupDE(ip):ip;
+  if(parts.length>1&&cfg.dec>0)o=(o||'0')+','+(dp||'');
+  return (neg?'-':'')+o;
+}
+function reformatLive(el,fmtName){
+  const cfg=FMT[fmtName]||FMT.num;
+  const raw=el.value;
+  if(!/[0-9]/.test(raw))return;
+  const sel=el.selectionStart==null?raw.length:el.selectionStart;
+  const digitsBefore=(raw.slice(0,sel).match(/[0-9]/g)||[]).length;
+  const out=liveFmt(raw,cfg);
+  el.value=out;
+  if(digitsBefore<=0){try{el.setSelectionRange(0,0);}catch(e){}return;}
+  let c=0,pos=out.length;
+  for(let i=0;i<out.length;i++){if(/[0-9]/.test(out[i])){c++;if(c===digitsBefore){pos=i+1;break;}}}
+  try{el.setSelectionRange(pos,pos);}catch(e){}
+}
 
-/* =================================================================
-   STATE & STORAGE
-   ================================================================= */
+/* ============ STATE & SPEICHER ============ */
 const KEY='immoKalkV1';
-const DEFAULT_CONFIG={
-  brutto:{g:6,y:5,r:4}, netto:{g:5,y:4,r:3}, ek:{g:20,y:10,r:5},
-  cfOp:{g:100,y:0,r:-50}, cfSt:{g:100,y:0,r:-50}
-};
+const DEFAULT_CONFIG={brutto:{g:6,y:5,r:4}, netto:{g:5,y:4,r:3}, ek:{g:20,y:10,r:5}, cfOp:{g:100,y:0,r:-50}, cfSt:{g:100,y:0,r:-50}};
 let db, currentView='dashboard', scnOverrides={};
-
-function newProperty(name){
-  return {id:'p'+Date.now()+Math.random().toString(36).slice(2,6),name:name||'Neue Immobilie',
-    created:Date.now(),updated:Date.now(),inputs:JSON.parse(JSON.stringify(DEFAULTS))};
+function newProperty(name, fromInputs){
+  return {id:'p'+Date.now()+Math.random().toString(36).slice(2,6),name:name||'Neue Immobilie',created:Date.now(),updated:Date.now(),
+    inputs: fromInputs?JSON.parse(JSON.stringify(fromInputs)):JSON.parse(JSON.stringify(DEFAULTS))};
 }
 function migrateDB(){
   if(!db.config)db.config=JSON.parse(JSON.stringify(DEFAULT_CONFIG));
@@ -594,16 +535,23 @@ function migrateDB(){
   db.properties.forEach(p=>{const i=p.inputs||(p.inputs={});
     if(i.mietBetrag==null){i.mietBetrag=(i.mietProQm!=null?i.mietProQm:11);i.mietModus=i.mietModus||'qm';}
     if(!i.investitionen)i.investitionen=JSON.parse(JSON.stringify(DEFAULTS.investitionen));
+    if(i.dl1Betrag==null){i.dl1Betrag=(i.dl1AnteilPct!=null?i.dl1AnteilPct:80);i.dl1Modus=i.dl1Modus||'pct';}
+    if(i.dl2Betrag==null){i.dl2Betrag=(i.dl2Summe!=null?i.dl2Summe:10000);i.dl2Modus=i.dl2Modus||'abs';}
+    if(i.dl2Aktiv==null)i.dl2Aktiv=true;
+    if(i.dl1Zinsbindung==null)i.dl1Zinsbindung=0;
+    if(i.dl2Zinsbindung==null)i.dl2Zinsbindung=0;
+    if(i.dl1Anschlusszins==null)i.dl1Anschlusszins=4;
+    if(i.dl2Anschlusszins==null)i.dl2Anschlusszins=4;
   });
 }
 function loadDB(){
   try{const raw=localStorage.getItem(KEY); if(raw)db=JSON.parse(raw);}catch(e){}
-  if(!db||!db.properties||!db.properties.length){
-    const p=newProperty('Musterstr. 11'); db={properties:[p],activeId:p.id,config:JSON.parse(JSON.stringify(DEFAULT_CONFIG)),theme:'light'};
-  }
+  if(!db||!db.properties||!db.properties.length){const p=newProperty('Musterstr. 11'); db={properties:[p],activeId:p.id,config:JSON.parse(JSON.stringify(DEFAULT_CONFIG)),theme:'light'};}
   migrateDB();
 }
 function saveDB(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){toast('Speichern fehlgeschlagen');} scheduleGhPush();}
+function active(){return db.properties.find(p=>p.id===db.activeId)||db.properties[0];}
+function activeInputs(){return Object.assign({},DEFAULTS,active().inputs);}
 
 /* ----- GitHub-Sync (privater Gist) ----- */
 const GH_KEY='immoKalkGitHub', GH_FILE='immobilien-kalkulation.json';
@@ -657,7 +605,7 @@ function renderGitHub(msg){
    <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0 12px"><input type="checkbox" id="ghAuto" ${gh.autoSync?'checked':''}> Automatisch hochladen bei Änderungen</label>
    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="icon-btn primary" id="ghPush">In GitHub speichern</button><button class="icon-btn" id="ghPull">Von GitHub laden</button><button class="icon-btn" id="ghDisc">Trennen</button></div>
    <div class="hint" id="ghStatus" style="margin-top:10px">${status}</div>
-   <div class="hint" style="margin-top:8px;line-height:1.6">Token erstellen: <b>github.com/settings/tokens</b> → „Generate new token (classic)" → nur Häkchen bei <b>gist</b> → kopieren und oben einfügen.</div>`;
+   <div class="hint" style="margin-top:8px;line-height:1.6">Token erstellen: <b>github.com/settings/tokens</b> → „Generate new token (classic)" → nur Häkchen bei <b>gist</b>.</div>`;
   document.getElementById('ghToken').addEventListener('change',e=>{const v=e.target.value.trim();if(v&&v!=='________'){gh.token=v;saveGH();renderGitHub();toast('Token gespeichert');}});
   document.getElementById('ghGist').addEventListener('change',e=>{gh.gistId=e.target.value.trim();saveGH();});
   document.getElementById('ghAuto').addEventListener('change',e=>{gh.autoSync=e.target.checked;saveGH();});
@@ -665,27 +613,13 @@ function renderGitHub(msg){
   document.getElementById('ghPull').addEventListener('click',()=>ghPull());
   document.getElementById('ghDisc').addEventListener('click',()=>{if(confirm('GitHub-Verbindung trennen? Token & Gist-ID werden aus diesem Browser entfernt.')){gh={};saveGH();renderGitHub();toast('Getrennt');}});
 }
-function active(){return db.properties.find(p=>p.id===db.activeId)||db.properties[0];}
-function activeInputs(){return Object.assign({},DEFAULTS,active().inputs);}
 
-/* =================================================================
-   AMPEL
-   ================================================================= */
-function ampel(value,cfg,scaleToPct){
-  if(value==null||isNaN(value))return 'none';
-  const v=scaleToPct?value*100:value;
-  if(v>=cfg.g)return 'green'; if(v>=cfg.y)return 'amber'; return 'red';
-}
-
-/* =================================================================
-   SVG-CHARTS
-   ================================================================= */
+/* ============ AMPEL & CHARTS ============ */
+function ampel(value,cfg,scaleToPct){if(value==null||isNaN(value))return 'none';const v=scaleToPct?value*100:value;if(v>=cfg.g)return 'green'; if(v>=cfg.y)return 'amber'; return 'red';}
 function cssvar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||'#888';}
 const PAL=()=>[cssvar('--c1'),cssvar('--c2'),cssvar('--c3'),cssvar('--c4'),cssvar('--c5'),cssvar('--c6'),cssvar('--c7')];
-
-function lineChart(host,{labels,series,yFmt,zero,fillFirst,stepX}){
-  const el=typeof host==='string'?document.getElementById(host):host;
-  if(!el)return;
+function lineChart(host,{labels,series,yFmt,zero}){
+  const el=typeof host==='string'?document.getElementById(host):host; if(!el)return;
   const W=820,H=330,P={l:64,r:18,t:14,b:30};
   const xs=labels.length; const allv=[]; series.forEach(s=>s.data.forEach(v=>{if(v!=null)allv.push(v)}));
   if(zero)allv.push(0);
@@ -696,8 +630,7 @@ function lineChart(host,{labels,series,yFmt,zero,fillFirst,stepX}){
   const iy=v=>P.t+(H-P.t-P.b)*(1-(v-min)/(max-min));
   const grid=cssvar('--border'), muted=cssvar('--muted');
   let g='';
-  const ticks=5;
-  for(let i=0;i<=ticks;i++){const v=min+(max-min)*i/ticks;const y=iy(v);
+  for(let i=0;i<=5;i++){const v=min+(max-min)*i/5;const y=iy(v);
     g+=`<line x1="${P.l}" y1="${y.toFixed(1)}" x2="${W-P.r}" y2="${y.toFixed(1)}" stroke="${grid}" stroke-width="1"/>`;
     g+=`<text x="${P.l-8}" y="${(y+3.5).toFixed(1)}" text-anchor="end" font-size="11" fill="${muted}">${yFmt(v)}</text>`;}
   if(zero){const y=iy(0);g+=`<line x1="${P.l}" y1="${y.toFixed(1)}" x2="${W-P.r}" y2="${y.toFixed(1)}" stroke="${muted}" stroke-width="1.2" stroke-dasharray="3 3"/>`;}
@@ -706,25 +639,19 @@ function lineChart(host,{labels,series,yFmt,zero,fillFirst,stepX}){
   series.forEach((s,si)=>{
     let d='',area='';
     s.data.forEach((v,i)=>{if(v==null)return;const x=ix(i),y=iy(v);d+=(d?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)+' ';});
-    if((fillFirst&&si===0)||s.fill){
-      const first=ix(0),last=ix(xs-1),baseY=iy(Math.max(min,0));
-      area=`<path d="${d}L${last.toFixed(1)} ${baseY.toFixed(1)} L${first.toFixed(1)} ${baseY.toFixed(1)} Z" fill="${s.color}" opacity="0.10"/>`;
-    }
+    if(s.fill){const first=ix(0),last=ix(xs-1),baseY=iy(Math.max(min,0));area=`<path d="${d}L${last.toFixed(1)} ${baseY.toFixed(1)} L${first.toFixed(1)} ${baseY.toFixed(1)} Z" fill="${s.color}" opacity="0.10"/>`;}
     g+=area+`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
   });
-  g+=`<rect class="hov" x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">${g}<g class="cursor" style="opacity:0"><line stroke="${muted}" stroke-width="1" y1="${P.t}" y2="${H-P.b}"/></g></svg>`;
   let tip=el.querySelector('.chart-tip'); if(!tip){tip=document.createElement('div');tip.className='chart-tip';el.appendChild(tip);}
   const svg=el.querySelector('svg'); const cursor=el.querySelector('.cursor'); const cline=cursor.querySelector('line');
-  const moveAt=clientX=>{
-    const r=svg.getBoundingClientRect(); const sx=(clientX-r.left)/r.width*W;
+  const moveAt=clientX=>{const r=svg.getBoundingClientRect(); const sx=(clientX-r.left)/r.width*W;
     let idx=Math.round((sx-P.l)/((W-P.l-P.r)/(xs-1))); idx=Math.max(0,Math.min(xs-1,idx));
     const cx=ix(idx); cursor.style.opacity=1; cline.setAttribute('x1',cx); cline.setAttribute('x2',cx);
-    let rows=series.map(s=>`<span style="color:${s.color}">●</span> ${s.name}: <b>${s.data[idx]==null?'–':yFmt(s.data[idx])}</b>`).join('<br>');
+    const rows=series.map(s=>`<span style="color:${s.color}">●</span> ${s.name}: <b>${s.data[idx]==null?'–':yFmt(s.data[idx])}</b>`).join('<br>');
     tip.innerHTML=`<b>${labels[idx]}</b><br>${rows}`; tip.style.opacity=1;
     const tx=Math.min(el.clientWidth-tip.offsetWidth-6, Math.max(2, cx/W*el.clientWidth+10));
-    tip.style.left=tx+'px'; tip.style.top='8px';
-  };
+    tip.style.left=tx+'px'; tip.style.top='8px';};
   const hide=()=>{tip.style.opacity=0;cursor.style.opacity=0;};
   svg.addEventListener('mousemove',ev=>moveAt(ev.clientX));
   svg.addEventListener('mouseleave',hide);
@@ -732,10 +659,7 @@ function lineChart(host,{labels,series,yFmt,zero,fillFirst,stepX}){
   svg.addEventListener('touchmove',ev=>{if(ev.touches[0]){moveAt(ev.touches[0].clientX);ev.preventDefault();}},{passive:false});
   svg.addEventListener('touchend',hide);
 }
-
-function legend(host,series){const el=typeof host==='string'?document.getElementById(host):host;if(!el)return;
-  el.innerHTML=series.map(s=>`<span><i style="background:${s.color}"></i>${s.name}</span>`).join('');}
-
+function legend(host,series){const el=typeof host==='string'?document.getElementById(host):host;if(!el)return;el.innerHTML=series.map(s=>`<span><i style="background:${s.color}"></i>${s.name}</span>`).join('');}
 function donut(host,segs,title){
   const el=typeof host==='string'?document.getElementById(host):host; if(!el)return;
   const tot=sum(segs.map(s=>s.value));const R=70,r=44,cx=90,cy=90;let a=-Math.PI/2,g='';
@@ -750,113 +674,87 @@ function donut(host,segs,title){
   const lg=segs.map(s=>`<span style="font-size:11px;display:flex;align-items:center;gap:5px"><i style="width:9px;height:9px;border-radius:2px;background:${s.color};display:inline-block"></i>${s.label} · ${fmtEur(s.value)}</span>`).join('');
   el.innerHTML=`<svg viewBox="0 0 180 180" style="max-width:200px;margin:0 auto;display:block">${g}</svg><div style="display:flex;flex-direction:column;gap:4px;margin-top:8px">${lg}</div>`;
 }
-
 function ioBar(host,einnahmen,ausgaben){
   const el=typeof host==='string'?document.getElementById(host):host;if(!el)return;
-  const pal=PAL();const W=420,H=240,P={l:10,r:10,t:14,b:26};
+  const W=420,H=240,P={t:14,b:26};
   const totAus=sum(ausgaben.map(a=>a.v));const maxV=Math.max(einnahmen,totAus)*1.12||1;
-  const bw=80,gap=120,x1=120,x2=x1+gap;
+  const bw=80,x1=120,x2=x1+120;
   const scale=v=>(H-P.t-P.b)*v/maxV;const base=H-P.b;let g='';
-  g+=`<rect x="${x1}" y="${(base-scale(einnahmen)).toFixed(1)}" width="${bw}" height="${scale(einnahmen).toFixed(1)}" rx="5" fill="${cssvar('--c2')}"><title>Einnahmen ${fmtEur(einnahmen)}</title></rect>`;
+  g+=`<rect x="${x1}" y="${(base-scale(einnahmen)).toFixed(1)}" width="${bw}" height="${scale(einnahmen).toFixed(1)}" rx="5" fill="${cssvar('--c2')}"></rect>`;
   g+=`<text x="${x1+bw/2}" y="${(base-scale(einnahmen)-7).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="700" fill="${cssvar('--text')}">${fmtEur(einnahmen)}</text>`;
   g+=`<text x="${x1+bw/2}" y="${base+18}" text-anchor="middle" font-size="11.5" fill="${cssvar('--muted')}">Einnahmen</text>`;
   let yy=base;const cols=[cssvar('--c3'),cssvar('--c6'),cssvar('--c1'),cssvar('--c4'),cssvar('--c7')];
-  ausgaben.forEach((a,i)=>{const h=scale(a.v);yy-=h;g+=`<rect x="${x2}" y="${yy.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" fill="${cols[i%cols.length]}"><title>${a.k} ${fmtEur(a.v)}</title></rect>`;});
+  ausgaben.forEach((a,i)=>{const h=scale(a.v);yy-=h;g+=`<rect x="${x2}" y="${yy.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" fill="${cols[i%cols.length]}"></rect>`;});
   g+=`<text x="${x2+bw/2}" y="${(yy-7).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="700" fill="${cssvar('--text')}">${fmtEur(totAus)}</text>`;
   g+=`<text x="${x2+bw/2}" y="${base+18}" text-anchor="middle" font-size="11.5" fill="${cssvar('--muted')}">Ausgaben</text>`;
   const lg=ausgaben.map((a,i)=>`<span><i style="background:${cols[i%cols.length]}"></i>${a.k} · ${fmtEur(a.v)}</span>`).join('');
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H}">${g}</svg><div class="legend">${lg}</div>`;
 }
 
-/* =================================================================
-   FELD- & GRUPPEN-DEFINITIONEN (Eingaben)
-   ================================================================= */
+/* ============ EINGABEN ============ */
 const BUNDESLAND={'— Bundesland wählen —':null,'Bayern (3,5 %)':3.5,'Sachsen (5,5 %)':5.5,'Hamburg (5,5 %)':5.5,'Baden-Württemberg (5,0 %)':5.0,'Bremen (5,0 %)':5.0,'Niedersachsen (5,0 %)':5.0,'Rheinland-Pfalz (5,0 %)':5.0,'Sachsen-Anhalt (5,0 %)':5.0,'Berlin (6,0 %)':6.0,'Hessen (6,0 %)':6.0,'Mecklenburg-Vorpommern (6,0 %)':6.0,'Brandenburg (6,5 %)':6.5,'Nordrhein-Westfalen (6,5 %)':6.5,'Saarland (6,5 %)':6.5,'Schleswig-Holstein (6,5 %)':6.5,'Thüringen (6,5 %)':6.5};
-
-const C_OBJEKT={title:'Objektdaten',fields:[
-   {k:'address',t:'text',l:'Adresse'},
-   {k:'kuerzel',t:'text',l:'Kürzel (optional)'},
-   {k:'buyDate',t:'date',l:'Kaufdatum'},
-   {k:'wohnflaeche',t:'num',l:'Wohnfläche',u:'m²',step:1},
-   {k:'stellplaetze',t:'num',l:'Stellplätze',u:'Anz.',step:1},
-   {k:'kaufpreis',t:'num',l:'Kaufpreis',u:'€',step:1000},
- ]};
-const C_NK={title:'Kaufnebenkosten',sub:'in % vom Kaufpreis',bundesland:true,fields:[
-   {k:'maklerPct',t:'num',l:'Makler',u:'%',step:0.01},
-   {k:'notarPct',t:'num',l:'Notar',u:'%',step:0.1},
-   {k:'grundbuchPct',t:'num',l:'Grundbuch / Amt',u:'%',step:0.1},
-   {k:'grunderwerbPct',t:'num',l:'Grunderwerbsteuer',u:'%',step:0.1},
-   {k:'sonstigeNkPct',t:'num',l:'Sonstige',u:'%',step:0.1},
- ],out:'outNk'};
+const C_OBJEKT={title:'Objektdaten',fields:[{k:'address',t:'text',l:'Adresse'},{k:'kuerzel',t:'text',l:'Kürzel (optional)'},{k:'buyDate',t:'date',l:'Kaufdatum'},{k:'wohnflaeche',t:'num',l:'Wohnfläche',u:'m²',fmt:'qm'},{k:'stellplaetze',t:'num',l:'Stellplätze',u:'Anz.',fmt:'int'},{k:'kaufpreis',t:'num',l:'Kaufpreis',u:'€',fmt:'eur'}]};
+const C_NK={title:'Kaufnebenkosten',sub:'in % vom Kaufpreis',bundesland:true,fields:[{k:'maklerPct',t:'num',l:'Makler',u:'%',fmt:'pct'},{k:'notarPct',t:'num',l:'Notar',u:'%',fmt:'pct'},{k:'grundbuchPct',t:'num',l:'Grundbuch / Amt',u:'%',fmt:'pct'},{k:'grunderwerbPct',t:'num',l:'Grunderwerbsteuer',u:'%',fmt:'pct'},{k:'sonstigeNkPct',t:'num',l:'Sonstige',u:'%',fmt:'pct'}],out:'outNk'};
 const C_INVEST={title:'Anfängliche Investitionen',invest:true,out:'outInvest'};
 const C_MIETE={title:'Miete',miete:true,out:'outMiete'};
-const C_UML={title:'Bewirtschaftung — umlagefähig',sub:'pro Monat',fields:[
-   {k:'hausgeldUml',t:'num',l:'Hausgeld (umlagefähig)',u:'€',step:5},
-   {k:'grundsteuer',t:'num',l:'Grundsteuer',u:'€',step:1},
-   {k:'sonstigesUml',t:'num',l:'Sonstiges (umlagefähig)',u:'€',step:5},
- ]};
-const C_NICHTUML={title:'Bewirtschaftung — nicht umlagefähig',sub:'pro Monat',fields:[
-   {k:'hausgeldNichtUml',t:'num',l:'Hausgeld (nicht umlagefähig)',u:'€',step:5},
-   {k:'wegRuecklage',t:'num',l:'davon WEG-Rücklage',u:'€',step:1},
-   {k:'instandQm',t:'num',l:'Eigene Instandhaltungsrücklage',u:'€/m²·a',step:1,hint:''},
-   {k:'kalkMietausfall',t:'num',l:'Kalkulatorischer Mietausfall',u:'%',step:0.5},
-   {k:'sonstigesNichtUml',t:'num',l:'Sonstiges (nicht umlagefähig)',u:'€',step:5},
- ],out:'outBewirt'};
-const C_DL1={title:'Darlehen 1 (Hauptdarlehen)',fields:[
-   {k:'dl1AnteilPct',t:'num',l:'Darlehenssumme (% vom Kaufpreis)',u:'%',step:1},
-   {k:'dl1Zins',t:'num',l:'Zinssatz',u:'%',step:0.1},
-   {k:'dl1Tilgung',t:'num',l:'Anfängliche Tilgung',u:'%',step:0.5},
- ],out:'outDl1'};
-const C_DL2={title:'Darlehen 2',sub:'optional',fields:[
-   {k:'dl2Summe',t:'num',l:'Darlehenssumme',u:'€',step:1000},
-   {k:'dl2Zins',t:'num',l:'Zinssatz',u:'%',step:0.1},
-   {k:'dl2Tilgung',t:'num',l:'Anfängliche Tilgung',u:'%',step:0.5},
- ],out:'outFin'};
-const C_ANNAHMEN={title:'Annahmen & Steuer',fields:[
-   {k:'afaSatz',t:'num',l:'AfA-Satz pro Jahr',u:'%',step:0.5},
-   {k:'gebaeudeAnteil',t:'num',l:'Anteil Gebäude am Kaufpreis',u:'%',step:1},
-   {k:'grenzsteuersatz',t:'num',l:'Persönlicher Grenzsteuersatz',u:'%',step:1},
-   {k:'mietsteigerung',t:'num',l:'Mietsteigerung p.a.',u:'%',step:0.5},
-   {k:'kostensteigerung',t:'num',l:'Kostensteigerung p.a.',u:'%',step:0.5},
-   {k:'wertsteigerung',t:'num',l:'Wertsteigerung p.a.',u:'%',step:0.5},
-   {k:'hochrechnungJahr',t:'num',l:'Hochrechnung für das Jahr',u:'Jahr',step:1},
- ]};
-
+const C_UML={title:'Bewirtschaftung — umlagefähig',sub:'pro Monat',fields:[{k:'hausgeldUml',t:'num',l:'Hausgeld (umlagefähig)',u:'€',fmt:'eur'},{k:'grundsteuer',t:'num',l:'Grundsteuer',u:'€',fmt:'eur'},{k:'sonstigesUml',t:'num',l:'Sonstiges (umlagefähig)',u:'€',fmt:'eur'}]};
+const C_NICHTUML={title:'Bewirtschaftung — nicht umlagefähig',sub:'pro Monat',fields:[{k:'hausgeldNichtUml',t:'num',l:'Hausgeld (nicht umlagefähig)',u:'€',fmt:'eur'},{k:'wegRuecklage',t:'num',l:'davon WEG-Rücklage',u:'€',fmt:'eur'},{k:'instandQm',t:'num',l:'Eigene Instandhaltungsrücklage',u:'€/m²·a',fmt:'eur',hint:''},{k:'kalkMietausfall',t:'num',l:'Kalkulatorischer Mietausfall',u:'%',fmt:'pct'},{k:'sonstigesNichtUml',t:'num',l:'Sonstiges (nicht umlagefähig)',u:'€',fmt:'eur'}],out:'outBewirt'};
+const C_DL1={title:'Darlehen 1 (Hauptdarlehen)',dl:1,out:'outDl1'};
+const C_DL2={title:'Darlehen 2',sub:'optional',dl:2,out:'outFin'};
+const C_ANNAHMEN={title:'Annahmen & Steuer',fields:[{k:'afaSatz',t:'num',l:'AfA-Satz pro Jahr',u:'%',fmt:'pct'},{k:'gebaeudeAnteil',t:'num',l:'Anteil Gebäude am Kaufpreis',u:'%',fmt:'pct'},{k:'grenzsteuersatz',t:'num',l:'Persönlicher Grenzsteuersatz',u:'%',fmt:'pct'},{k:'mietsteigerung',t:'num',l:'Mietsteigerung p.a.',u:'%',fmt:'pct'},{k:'kostensteigerung',t:'num',l:'Kostensteigerung p.a.',u:'%',fmt:'pct'},{k:'wertsteigerung',t:'num',l:'Wertsteigerung p.a.',u:'%',fmt:'pct'}]};
 const GROUPS=[
-  {id:'allgemein', label:'Allgemein', cards:[C_OBJEKT]},
-  {id:'nebenkosten', label:'Kaufnebenkosten', cards:[C_NK, C_INVEST]},
-  {id:'miete', label:'Miete', cards:[C_MIETE]},
-  {id:'bewirt', label:'Bewirtschaftung', cards:[C_UML, C_NICHTUML]},
-  {id:'darlehen1', label:'Darlehen 1', cards:[C_DL1]},
-  {id:'darlehen2', label:'Darlehen 2', cards:[C_DL2]},
-  {id:'annahmen', label:'Annahmen & Steuer', cards:[C_ANNAHMEN]},
+  {id:'allgemein',label:'Allgemein',cards:[C_OBJEKT]},
+  {id:'nebenkosten',label:'Kaufnebenkosten',cards:[C_NK,C_INVEST]},
+  {id:'miete',label:'Miete',cards:[C_MIETE]},
+  {id:'bewirt',label:'Bewirtschaftung',cards:[C_UML,C_NICHTUML]},
+  {id:'darlehen1',label:'Darlehen 1',cards:[C_DL1]},
+  {id:'darlehen2',label:'Darlehen 2',cards:[C_DL2]},
+  {id:'annahmen',label:'Annahmen & Steuer',cards:[C_ANNAHMEN]},
 ];
 let einGroup='allgemein';
-
 function fieldHTML(f){
   const inp=active().inputs;let val=inp[f.k]!=null?inp[f.k]:DEFAULTS[f.k];
   if(f.t==='text')return `<div class="field"><label>${f.l}</label><div class="inp"><input type="text" data-key="${f.k}" value="${(val||'').toString().replace(/"/g,'&quot;')}"></div>${f.hint?`<div class="hint">${f.hint}</div>`:''}</div>`;
   if(f.t==='date')return `<div class="field"><label>${f.l}</label><div class="inp"><input type="date" data-key="${f.k}" value="${val}"></div></div>`;
-  return `<div class="field"><label>${f.l}</label><div class="inp"><input type="number" inputmode="decimal" step="${f.step||1}" data-key="${f.k}" value="${val}"><span class="unit">${f.u||''}</span></div>${f.hint?`<div class="hint" data-hint="${f.k}">${f.hint}</div>`:''}</div></div>`;
+  const fmt=f.fmt||'num';
+  return `<div class="field"><label>${f.l}</label><div class="inp"><input type="text" inputmode="decimal" data-key="${f.k}" data-fmt="${fmt}" value="${FMT[fmt].init(val)}"><span class="unit">${f.u||''}</span></div>${f.hint!=null?`<div class="hint" data-hint="${f.k}">${f.hint}</div>`:''}</div>`;
 }
-
 function mieteCardHTML(){
   const i=active().inputs;const modus=i.mietModus||'qm';
   const betrag=i.mietBetrag!=null?i.mietBetrag:(i.mietProQm!=null?i.mietProQm:11);
   const unit=modus==='qm'?'€/m²':(modus==='jahr'?'€/Jahr':'€/Monat');
   const lab=modus==='qm'?'Kaltmiete pro m² · Monat':(modus==='jahr'?'Kaltmiete gesamt · Jahr':'Kaltmiete gesamt · Monat');
-  const step=modus==='qm'?0.1:(modus==='jahr'?100:10);
   return `<div class="field"><label>Eingabe-Art der Kaltmiete</label>
      <div class="seg" id="mietSeg">
        <button type="button" data-modus="qm" class="${modus==='qm'?'active':''}">pro m²</button>
        <button type="button" data-modus="monat" class="${modus==='monat'?'active':''}">Monat ges.</button>
        <button type="button" data-modus="jahr" class="${modus==='jahr'?'active':''}">Jahr ges.</button>
      </div></div>
-   <div class="field"><label id="mietLbl">${lab}</label><div class="inp"><input type="number" inputmode="decimal" step="${step}" id="mietBetrag" value="${betrag}"><span class="unit" id="mietUnit">${unit}</span></div><div class="hint" id="mietHint"></div></div>
-   ${fieldHTML({k:'stellplatzMiete',t:'num',l:'Stellplätze (Miete / Monat)',u:'€',step:5})}
-   ${fieldHTML({k:'sonstigesMiete',t:'num',l:'Sonstiges (Miete / Monat)',u:'€',step:5})}`;
+   <div class="field"><label id="mietLbl">${lab}</label><div class="inp"><input type="text" inputmode="decimal" id="mietBetrag" data-fmt="eur" value="${FMT.eur.init(betrag)}"><span class="unit" id="mietUnit">${unit}</span></div><div class="hint" id="mietHint"></div></div>
+   ${fieldHTML({k:'stellplatzMiete',t:'num',l:'Stellplätze (Miete / Monat)',u:'€',fmt:'eur'})}
+   ${fieldHTML({k:'sonstigesMiete',t:'num',l:'Sonstiges (Miete / Monat)',u:'€',fmt:'eur'})}`;
 }
-
+function dlCardHTML(n){
+  const i=active().inputs;
+  const aktiv=n===1?true:(i.dl2Aktiv!==false);
+  let h='';
+  if(n===2){h+=`<label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:14px"><input type="checkbox" id="dl2Aktiv" ${aktiv?'checked':''}> Darlehen 2 verwenden</label>`;
+    if(!aktiv){return h+`<div class="hint">Darlehen 2 ist deaktiviert. Haken setzen, um es zu nutzen.</div>`;}}
+  const modus=i['dl'+n+'Modus']||(n===1?'pct':'abs');
+  const betrag=i['dl'+n+'Betrag']!=null?i['dl'+n+'Betrag']:(n===1?(i.dl1AnteilPct!=null?i.dl1AnteilPct:80):(i.dl2Summe!=null?i.dl2Summe:10000));
+  const fmt=modus==='abs'?'eur':'pct'; const unit=modus==='abs'?'€':'% v. KP';
+  h+=`<div class="field"><label>Darlehenssumme</label>
+     <div class="seg" id="dl${n}ModusSeg" style="margin-bottom:8px">
+       <button type="button" data-dlm="${n}" data-modus="pct" class="${modus==='pct'?'active':''}">% vom Kaufpreis</button>
+       <button type="button" data-dlm="${n}" data-modus="abs" class="${modus==='abs'?'active':''}">€ absolut</button>
+     </div>
+     <div class="inp"><input type="text" inputmode="decimal" id="dl${n}Betrag" data-fmt="${fmt}" value="${FMT[fmt].init(betrag)}"><span class="unit" id="dl${n}BetragUnit">${unit}</span></div>
+     <div class="hint" id="dl${n}BetragHint"></div></div>`;
+  h+=`<div class="field-row">${fieldHTML({k:'dl'+n+'Zins',t:'num',l:'Zinssatz',u:'%',fmt:'pct'})}${fieldHTML({k:'dl'+n+'Tilgung',t:'num',l:'Anf. Tilgung',u:'%',fmt:'pct'})}</div>`;
+  h+=`<div style="font-size:12px;color:var(--muted);font-weight:600;margin:14px 0 8px">Anschlussfinanzierung (Zinsänderungsrisiko)</div>`;
+  h+=`<div class="field-row">${fieldHTML({k:'dl'+n+'Zinsbindung',t:'num',l:'Zinsbindung',u:'Jahre',fmt:'int',hint:'0 = keine'})}${fieldHTML({k:'dl'+n+'Anschlusszins',t:'num',l:'Anschlusszins danach',u:'%',fmt:'pct'})}</div>`;
+  return h;
+}
 function renderInputs(){
   const tabs=document.getElementById('einTabs');
   tabs.innerHTML=GROUPS.map(g=>`<button class="subtab ${g.id===einGroup?'active':''}" data-group="${g.id}">${g.label}</button>`).join('');
@@ -868,14 +766,12 @@ function renderInputs(){
     if(c.bundesland)html+=`<div class="field"><label>Bundesland (setzt Grunderwerbsteuer)</label><div class="inp"><select id="blSelect">${Object.keys(BUNDESLAND).map(b=>`<option>${b}</option>`).join('')}</select></div></div>`;
     if(c.invest){html+=`<div id="invTable"></div>`;}
     else if(c.miete){html+=mieteCardHTML();}
+    else if(c.dl){html+=dlCardHTML(c.dl);}
     else if(c.fields){
       const nums=c.fields;let i=0;
-      while(i<nums.length){
-        const f=nums[i];
-        if((f.t==='num')&&nums[i+1]&&nums[i+1].t==='num'&&nums.length>3&&f.k!=='kaufpreis'){
-          html+=`<div class="field-row">${fieldHTML(f)}${fieldHTML(nums[i+1])}</div>`;i+=2;
-        }else{html+=fieldHTML(f);i++;}
-      }
+      while(i<nums.length){const f=nums[i];
+        if((f.t==='num')&&nums[i+1]&&nums[i+1].t==='num'&&nums.length>3&&f.k!=='kaufpreis'){html+=`<div class="field-row">${fieldHTML(f)}${fieldHTML(nums[i+1])}</div>`;i+=2;}
+        else{html+=fieldHTML(f);i++;}}
     }
     if(c.out)html+=`<div data-out="${c.out}" style="margin-top:12px"></div>`;
     html+=`</div>`;
@@ -883,313 +779,183 @@ function renderInputs(){
   host.innerHTML=html;
   if(group.cards.some(c=>c.invest))renderInvTable();
   if(group.cards.some(c=>c.miete))wireMiete();
+  group.cards.forEach(c=>{if(c.dl)wireDl(c.dl);});
+  wireFields(host);
+  const bl=document.getElementById('blSelect');
+  if(bl)bl.addEventListener('change',()=>{const p=BUNDESLAND[bl.value];if(p!=null){active().inputs.grunderwerbPct=p;const f=document.querySelector('input[data-key="grunderwerbPct"]');if(f)f.value=FMT.pct.init(p);scheduleSave();recompute();}});
+}
+function wireFields(host){
   host.querySelectorAll('input[data-key],select[data-key]').forEach(el=>{
     el.addEventListener('input',()=>{
-      const k=el.dataset.key;const v=el.type==='number'?(el.value===''?'':parseFloat(el.value)):el.value;
-      active().inputs[k]=v;active().updated=Date.now();scheduleSave();recompute();
+      const k=el.dataset.key;
+      if(el.dataset.fmt){active().inputs[k]=parseDE(el.value);reformatLive(el,el.dataset.fmt);}
+      else {active().inputs[k]=el.value;}
+      active().updated=Date.now();scheduleSave();recompute();
     });
+    if(el.dataset.fmt)el.addEventListener('blur',()=>{el.value=FMT[el.dataset.fmt].init(active().inputs[el.dataset.key]);});
   });
-  const bl=document.getElementById('blSelect');
-  if(bl)bl.addEventListener('change',()=>{const p=BUNDESLAND[bl.value];if(p!=null){active().inputs.grunderwerbPct=p;const f=document.querySelector('input[data-key="grunderwerbPct"]');if(f)f.value=p;scheduleSave();recompute();}});
 }
-
 function wireMiete(){
   const seg=document.getElementById('mietSeg');if(!seg)return;
   seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
     const i=active().inputs;const oldModus=i.mietModus||'qm';const WF=N(i.wohnflaeche)||1;
     const oldBetrag=N(i.mietBetrag!=null?i.mietBetrag:i.mietProQm);
     const monat=oldModus==='monat'?oldBetrag:(oldModus==='jahr'?oldBetrag/12:oldBetrag*WF);
-    const nm=b.dataset.modus;
-    let nb=nm==='monat'?monat:(nm==='jahr'?monat*12:monat/WF);
+    const nm=b.dataset.modus;let nb=nm==='monat'?monat:(nm==='jahr'?monat*12:monat/WF);
     i.mietModus=nm;i.mietBetrag=Math.round(nb*100)/100;i.mietProQm=monat/WF;
     scheduleSave();renderInputs();recompute();
   }));
   const be=document.getElementById('mietBetrag');
-  if(be)be.addEventListener('input',()=>{
-    const i=active().inputs;i.mietBetrag=be.value===''?'':parseFloat(be.value);
-    const modus=i.mietModus||'qm';const WF=N(i.wohnflaeche)||1;const b=N(i.mietBetrag);
-    const monat=modus==='monat'?b:(modus==='jahr'?b/12:b*WF);i.mietProQm=monat/WF;
-    scheduleSave();recompute();
-  });
+  if(be){be.addEventListener('input',()=>{active().inputs.mietBetrag=parseDE(be.value);reformatLive(be,'eur');const i=active().inputs;const modus=i.mietModus||'qm';const WF=N(i.wohnflaeche)||1;const b=N(i.mietBetrag);const monat=modus==='monat'?b:(modus==='jahr'?b/12:b*WF);i.mietProQm=monat/WF;scheduleSave();recompute();});
+    be.addEventListener('blur',()=>{be.value=FMT.eur.init(active().inputs.mietBetrag);});}
 }
-
+function wireDl(n){
+  if(n===2){const a=document.getElementById('dl2Aktiv');if(a)a.addEventListener('change',()=>{active().inputs.dl2Aktiv=a.checked;scheduleSave();renderInputs();recompute();});}
+  const seg=document.getElementById('dl'+n+'ModusSeg');
+  if(seg)seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    const i=active().inputs;const oldModus=i['dl'+n+'Modus']||(n===1?'pct':'abs');const KP=N(i.kaufpreis)||1;
+    const oldBetrag=N(i['dl'+n+'Betrag']!=null?i['dl'+n+'Betrag']:(n===1?i.dl1AnteilPct:i.dl2Summe));
+    const sumEur=oldModus==='abs'?oldBetrag:oldBetrag/100*KP;
+    const nm=b.dataset.modus;
+    i['dl'+n+'Modus']=nm;
+    i['dl'+n+'Betrag']=nm==='abs'?Math.round(sumEur*100)/100:Math.round(sumEur/KP*10000)/100;
+    scheduleSave();renderInputs();recompute();
+  }));
+  const be=document.getElementById('dl'+n+'Betrag');
+  if(be){be.addEventListener('input',()=>{active().inputs['dl'+n+'Betrag']=parseDE(be.value);reformatLive(be,be.dataset.fmt);scheduleSave();recompute();});
+    be.addEventListener('blur',()=>{be.value=FMT[be.dataset.fmt].init(active().inputs['dl'+n+'Betrag']);});}
+}
 function renderInvTable(){
   const host=document.getElementById('invTable');if(!host)return;
   const inv=active().inputs.investitionen||[];
   let rows=inv.map((r,i)=>`<tr>
     <td><input type="text" data-inv="${i}" data-f="name" value="${(r.name||'').replace(/"/g,'&quot;')}"></td>
-    <td style="width:78px"><input type="number" step="100" data-inv="${i}" data-f="kosten" value="${r.kosten}"></td>
-    <td style="width:78px"><input type="number" step="100" data-inv="${i}" data-f="wertsteigerung" value="${r.wertsteigerung}"></td>
-    <td style="width:30px;text-align:center"><input type="checkbox" data-inv="${i}" data-f="aktivieren" ${r.aktivieren?'checked':''} title="Steuerlich aktivieren"></td>
+    <td style="width:92px"><input type="text" inputmode="decimal" data-inv="${i}" data-f="kosten" data-fmt="eur" value="${FMT.eur.init(r.kosten)}"></td>
+    <td style="width:92px"><input type="text" inputmode="decimal" data-inv="${i}" data-f="wertsteigerung" data-fmt="eur" value="${FMT.eur.init(r.wertsteigerung)}"></td>
+    <td style="width:30px;text-align:center"><input type="checkbox" data-inv="${i}" data-f="aktivieren" ${r.aktivieren?'checked':''}></td>
     <td style="width:24px"><button class="del" data-delinv="${i}">×</button></td></tr>`).join('');
   host.innerHTML=`<table class="inv"><tr><th>Position</th><th>Kosten €</th><th>Wertst. €</th><th title="Steuerlich aktivieren (AfA) statt sofort">Akt.</th><th></th></tr>${rows}</table><button class="add-row" id="addInv">+ Position hinzufügen</button>`;
-  host.querySelectorAll('[data-inv]').forEach(el=>el.addEventListener('input',()=>{
-    const i=+el.dataset.inv,f=el.dataset.f;const r=active().inputs.investitionen[i];
-    if(f==='aktivieren')r[f]=el.checked;else if(f==='name')r[f]=el.value;else r[f]=el.value===''?0:parseFloat(el.value);
-    scheduleSave();recompute();
-  }));
-  host.querySelectorAll('[data-delinv]').forEach(el=>el.addEventListener('click',()=>{
-    active().inputs.investitionen.splice(+el.dataset.delinv,1);renderInvTable();scheduleSave();recompute();}));
-  document.getElementById('addInv').addEventListener('click',()=>{
-    active().inputs.investitionen.push({name:'Sonstiges',kosten:0,aktivieren:true,wertsteigerung:0});renderInvTable();scheduleSave();recompute();});
+  host.querySelectorAll('[data-inv]').forEach(el=>{
+    el.addEventListener('input',()=>{const i=+el.dataset.inv,f=el.dataset.f;const r=active().inputs.investitionen[i];
+      if(f==='aktivieren')r[f]=el.checked;else if(f==='name')r[f]=el.value;else{r[f]=parseDE(el.value);reformatLive(el,'eur');}
+      scheduleSave();recompute();});
+    if(el.dataset.fmt)el.addEventListener('blur',()=>{el.value=FMT.eur.init(active().inputs.investitionen[+el.dataset.inv][el.dataset.f]);});
+  });
+  host.querySelectorAll('[data-delinv]').forEach(el=>el.addEventListener('click',()=>{active().inputs.investitionen.splice(+el.dataset.delinv,1);renderInvTable();scheduleSave();recompute();}));
+  document.getElementById('addInv').addEventListener('click',()=>{active().inputs.investitionen.push({name:'Sonstiges',kosten:0,aktivieren:true,wertsteigerung:0});renderInvTable();scheduleSave();recompute();});
 }
-
-/* =================================================================
-   RENDER: computed summaries (Eingaben)
-   ================================================================= */
 function setOut(id,html){const el=document.querySelector(`[data-out="${id}"]`);if(el)el.innerHTML=html;}
 const SR=(k,v,cls='')=>`<div class="sumrow"><span class="k">${k}</span><span class="v ${cls}">${v}</span></div>`;
 const SRT=(k,v)=>`<div class="sumrow total"><span class="k">${k}</span><span class="v">${v}</span></div>`;
-
 function renderEingabenOut(m){
+  const i=active().inputs;
   setOut('outNk',SR('Summe %',fmtPct(m.nk.summePct,2))+SRT('Kaufnebenkosten',fmtEur(m.nk.summeEur)));
   setOut('outInvest',SR('Kosten gesamt',fmtEur(m.invest.kosten))+SR('davon steuerl. aktiviert',fmtEur(m.invest.aktiviert))+SR('Wertsteigerung',fmtEur(m.invest.wert))+SR('15 %-Grenze (Erhaltungsaufw.)',fmtEur(m.invest.grenze15))+SRT('Gesamtinvestition',fmtEur(m.gesamtInvest)));
   setOut('outMiete',SR('Kaltmiete Wohnfläche',fmtEur(m.miete.kaltGesamt))+SR('Nettokaltmiete',fmtEur(m.miete.nettokaltmiete))+SR('+ umlagefähige Kosten',fmtEur(m.miete.umlSumme))+SRT('Warmmiete',fmtEur(m.miete.warmmiete)));
   setOut('outBewirt',SR('Eigene Instandhaltungsrücklage',fmtEur(m.bewirt.instandEigen))+SR('empfohlen wären',fmtEur(m.bewirt.empfohleneInstand))+SR('Kalkulat. Mietausfall',fmtEur(m.bewirt.kalkMietausfallEur))+SR('Summe nicht umlagefähig',fmtEur(m.bewirt.nichtUmlSumme))+SRT('Bewirtschaftung gesamt',fmtEur(m.bewirt.gesamt)));
-  setOut('outDl1',SR('Darlehenssumme I',fmtEur(m.fin.dl1))+SR('Kapitaldienst / Monat',fmtEur(m.fin.kd1))+SR('Jahr der Volltilgung',m.fin.vollI||'–'));
+  let dl1Extra=''; if(N(i.dl1Zinsbindung)>0)dl1Extra=SR('Zins ab Jahr '+Math.round(N(i.dl1Zinsbindung)+1),fmtPct(N(i.dl1Anschlusszins)/100,1));
+  setOut('outDl1',SR('Darlehenssumme 1',fmtEur(m.fin.dl1))+SR('Kapitaldienst / Monat',fmtEur(m.fin.kd1))+dl1Extra+SR('Jahr der Volltilgung',m.fin.vollI||'–'));
   setOut('outFin',SR('Darlehenssumme gesamt',fmtEur(m.fin.dlGesamt))+SR('Eigenkapital',fmtEur(m.fin.ek))+SR('Zinssatz gewichtet',fmtPct(m.fin.zinsGew,2))+SR('Tilgung gewichtet',fmtPct(m.fin.tilgGew,2))+SRT('Kapitaldienst / Monat',fmtEur(m.fin.kdGesamt)));
   const h=document.querySelector('[data-hint="instandQm"]');if(h)h.textContent=`empfohlen ≈ ${fmtEur(m.bewirt.empfohleneInstand)}/m²·a`;
   const mh=document.getElementById('mietHint');
   if(mh)mh.textContent=`= ${fmtEur(m.miete.kaltGesamt)}/Monat  ·  ${fmtEur(m.miete.kaltGesamt*12)}/Jahr  ·  ${fmtEur(m.WF?m.miete.kaltGesamt/m.WF:0,2)}/m²`;
+  const KP=m.KP||1;
+  const d1h=document.getElementById('dl1BetragHint');if(d1h)d1h.textContent=`= ${fmtEur(m.fin.dl1)} · ${fmtPct(m.fin.dl1/KP,1)} vom Kaufpreis`;
+  const d2h=document.getElementById('dl2BetragHint');if(d2h)d2h.textContent=`= ${fmtEur(m.fin.dl2)} · ${fmtPct(m.fin.dl2/KP,1)} vom Kaufpreis`;
 }
-
 function renderEinStrip(m){
   const host=document.getElementById('einKpiStrip');if(!host)return;
   const c=db.config,k=m.kpiNow;
   const tile=(l,v,a)=>{const cls=a&&a!=='none'?a:'';return `<div class="mini-kpi">${cls?`<div class="s a-${cls}"></div>`:''}<div class="l">${l}</div><div class="v ${cls}">${v}</div></div>`;};
-  host.innerHTML=
-    tile('Brutto-Rendite',fmtPct(k.brutto,2),ampel(k.brutto,c.brutto,true))+
-    tile('Netto-Rendite',fmtPct(k.netto,2),ampel(k.netto,c.netto,true))+
-    tile('EK-Rendite',fmtPct(k.ekRendite,1),ampel(k.ekRendite,c.ek,true))+
-    tile('CF operativ',fmtEur(k.cfOperativ)+'/M',ampel(k.cfOperativ,c.cfOp,false))+
-    tile('CF n. Steuer',fmtEur(k.cfNachSteuer)+'/M',ampel(k.cfNachSteuer,c.cfSt,false))+
-    tile('Gesamtinvest.',fmtEur(m.gesamtInvest),'none')+
-    tile('Eigenkapital',fmtEur(m.fin.ek),'none');
+  host.innerHTML=tile('Brutto-Rendite',fmtPct(k.brutto,2),ampel(k.brutto,c.brutto,true))+tile('Netto-Rendite',fmtPct(k.netto,2),ampel(k.netto,c.netto,true))+tile('EK-Rendite',fmtPct(k.ekRendite,1),ampel(k.ekRendite,c.ek,true))+tile('CF operativ',fmtEur(k.cfOperativ)+'/M',ampel(k.cfOperativ,c.cfOp,false))+tile('CF n. Steuer',fmtEur(k.cfNachSteuer)+'/M',ampel(k.cfNachSteuer,c.cfSt,false))+tile('Gesamtinvest.',fmtEur(m.gesamtInvest),'none')+tile('Eigenkapital',fmtEur(m.fin.ek),'none');
 }
-
-/* =================================================================
-   RENDER: KPI dashboard
-   ================================================================= */
-function kpiTile(lab,val,{ampelCls,note,big}={}){
-  const stripe=ampelCls&&ampelCls!=='none'?`<div class="kpi-stripe ${ampelCls}"></div>`:'';
-  const dot=ampelCls?`<span class="ampel a-${ampelCls}"></span>`:'';
-  return `<div class="kpi${big?' lg':''}">${stripe}<div class="lab">${dot}${lab}</div><div class="val">${val}</div>${note?`<div class="note">${note}</div>`:''}</div>`;
-}
-function renderKpiNow(m){
-  const c=db.config,k=m.kpiNow;
-  const h=[
-    kpiTile('Bruttomietrendite',fmtPct(k.brutto,2),{ampelCls:ampel(k.brutto,c.brutto,true),note:'Nettokaltmiete p.a. / Kaufpreis'}),
-    kpiTile('Nettomietrendite',fmtPct(k.netto,2),{ampelCls:ampel(k.netto,c.netto,true),note:'auf Gesamtinvestition'}),
-    kpiTile('Eigenkapitalrendite',fmtPct(k.ekRendite,1),{ampelCls:ampel(k.ekRendite,c.ek,true),note:'inkl. Wertsteigerung'}),
-    kpiTile('Cashflow operativ',fmtEur(k.cfOperativ,0)+' /M',{ampelCls:ampel(k.cfOperativ,c.cfOp,false),note:'vor Steuern'}),
-    kpiTile('Cashflow nach Steuer',fmtEur(k.cfNachSteuer,0)+' /M',{ampelCls:ampel(k.cfNachSteuer,c.cfSt,false),note:'inkl. Steuereffekt'}),
-    kpiTile('Vermögenszuwachs',fmtEur(k.vermZuwachs,0)+' /a',{note:'Tilgung + CF + Wertsteig.'}),
-    kpiTile('Kaufpreisfaktor',fmtNum(k.faktor,1),{note:'Kaufpreis / Jahresnettokaltmiete'}),
-    kpiTile('Break-even',k.breakEven?k.breakEven:'> '+(m.buyYear+m.series.length-1),{note:'kumulierter CF nach Steuer ≥ 0'}),
-  ].join('');
-  document.getElementById('kpiNow').innerHTML=h;
-}
-function renderCfList(m){
-  const k=m.kpiNow;
-  const items=[
-    {l:'Warmmiete',v:k.warmmiete},
-    {l:'– Bewirtschaftung',v:-k.bewirtGesamt},
-    {l:'– Zinsen',v:k.cfZins},
-    {l:'– Tilgung',v:k.cfTilg},
-  ];
-  const maxAbs=Math.max(...items.map(i=>Math.abs(i.v)));
-  let html=items.map(i=>{const w=maxAbs?Math.abs(i.v)/maxAbs*100:0;const pos=i.v>=0;
-    return `<div class="cf-item"><span>${i.l}</span><span class="bar"><i style="${pos?'left:0':'right:0'};width:${w}%;background:${pos?'var(--green)':'var(--red)'}"></i></span><span class="amt ${pos?'pos':'neg'}">${fmtEur(i.v)}</span></div>`;}).join('');
-  html+=`<div class="cf-item res"><span>= Cashflow operativ</span><span class="amt ${k.cfOperativ>=0?'pos':'neg'}">${fmtEur(k.cfOperativ)}</span></div>`;
-  html+=`<div class="cf-item"><span>– Steuern</span><span class="amt ${-k.steuer0>=0?'pos':'neg'}">${fmtEur(-k.steuer0)}</span></div>`;
-  html+=`<div class="cf-item res"><span>= Cashflow nach Steuer</span><span class="amt ${k.cfNachSteuer>=0?'pos':'neg'}">${fmtEur(k.cfNachSteuer)}</span></div>`;
-  document.getElementById('cfList').innerHTML=html;
-}
-function renderKpiFuture(m){
-  const f=m.kpiFuture,c=db.config;
-  document.getElementById('kpiFuture').innerHTML=[
-    kpiTile('Wert der Immobilie',fmtEur(f.wert),{note:fmtEur(f.wertProQm)+' /m²'}),
-    kpiTile('Restschuld',fmtEur(f.restschuld),{note:'Ende '+f.jahr}),
-    kpiTile('Nettovermögen',fmtEur(f.nettovermoegen),{note:'Wert – Restschuld'}),
-    kpiTile('Warmmiete',fmtEur(f.wm)+' /M',{note:'Nettokaltmiete '+fmtEur(f.nkm)}),
-    kpiTile('Cashflow operativ',fmtEur(f.cfOperativ,0)+' /M',{ampelCls:ampel(f.cfOperativ,c.cfOp,false)}),
-    kpiTile('Cashflow nach Steuer',fmtEur(f.cfNachSteuer,0)+' /M',{ampelCls:ampel(f.cfNachSteuer,c.cfSt,false)}),
-    kpiTile('Bruttomietrendite',fmtPct(f.brutto,2),{note:'auf urspr. Kaufpreis'}),
-    kpiTile('Break-even Zinssatz',fmtPct(f.zinsBreakEven,2),{note:'Zins für CF n.St. = 0'}),
-  ].join('');
-}
-
-/* =================================================================
-   RENDER: charts (Verlauf / Dashboard)
-   ================================================================= */
-function renderDashboardCharts(m){
-  const k=m.kpiNow;
-  ioBar('chartIO',k.warmmiete,[
-    {k:'Bewirtschaftung',v:k.bewirtGesamt},{k:'Zinsen',v:-k.cfZins},{k:'Tilgung',v:-k.cfTilg},{k:'Steuern',v:Math.max(0,k.steuer0)}
-  ]);
-}
+function kpiTile(lab,val,o){o=o||{};const stripe=o.ampelCls&&o.ampelCls!=='none'?`<div class="kpi-stripe ${o.ampelCls}"></div>`:'';const dot=o.ampelCls?`<span class="ampel a-${o.ampelCls}"></span>`:'';return `<div class="kpi">${stripe}<div class="lab">${dot}${lab}</div><div class="val">${val}</div>${o.note?`<div class="note">${o.note}</div>`:''}</div>`;}
+function renderKpiNow(m){const c=db.config,k=m.kpiNow;document.getElementById('kpiNow').innerHTML=[kpiTile('Bruttomietrendite',fmtPct(k.brutto,2),{ampelCls:ampel(k.brutto,c.brutto,true),note:'Nettokaltmiete p.a. / Kaufpreis'}),kpiTile('Nettomietrendite',fmtPct(k.netto,2),{ampelCls:ampel(k.netto,c.netto,true),note:'auf Gesamtinvestition'}),kpiTile('Eigenkapitalrendite',fmtPct(k.ekRendite,1),{ampelCls:ampel(k.ekRendite,c.ek,true),note:'inkl. Wertsteigerung'}),kpiTile('Cashflow operativ',fmtEur(k.cfOperativ,0)+' /M',{ampelCls:ampel(k.cfOperativ,c.cfOp,false),note:'vor Steuern'}),kpiTile('Cashflow nach Steuer',fmtEur(k.cfNachSteuer,0)+' /M',{ampelCls:ampel(k.cfNachSteuer,c.cfSt,false),note:'inkl. Steuereffekt'}),kpiTile('Vermögenszuwachs',fmtEur(k.vermZuwachs,0)+' /a',{note:'Tilgung + CF + Wertsteig.'}),kpiTile('Kaufpreisfaktor',fmtNum(k.faktor,1),{note:'Kaufpreis / Jahresnettokaltmiete'}),kpiTile('Break-even',k.breakEven?k.breakEven:'> '+(m.buyYear+m.series.length-1),{note:'kumulierter CF nach Steuer ≥ 0'})].join('');}
+function renderCfList(m){const k=m.kpiNow;const items=[{l:'Warmmiete',v:k.warmmiete},{l:'– Bewirtschaftung',v:-k.bewirtGesamt},{l:'– Zinsen',v:k.cfZins},{l:'– Tilgung',v:k.cfTilg}];const maxAbs=Math.max(...items.map(i=>Math.abs(i.v)));let html=items.map(i=>{const w=maxAbs?Math.abs(i.v)/maxAbs*100:0;const pos=i.v>=0;return `<div class="cf-item"><span>${i.l}</span><span class="bar"><i style="${pos?'left:0':'right:0'};width:${w}%;background:${pos?'var(--green)':'var(--red)'}"></i></span><span class="amt ${pos?'pos':'neg'}">${fmtEur(i.v)}</span></div>`;}).join('');html+=`<div class="cf-item res"><span>= Cashflow operativ</span><span class="amt ${k.cfOperativ>=0?'pos':'neg'}">${fmtEur(k.cfOperativ)}</span></div>`;html+=`<div class="cf-item"><span>– Steuern</span><span class="amt ${-k.steuer0>=0?'pos':'neg'}">${fmtEur(-k.steuer0)}</span></div>`;html+=`<div class="cf-item res"><span>= Cashflow nach Steuer</span><span class="amt ${k.cfNachSteuer>=0?'pos':'neg'}">${fmtEur(k.cfNachSteuer)}</span></div>`;document.getElementById('cfList').innerHTML=html;}
+function renderKpiFuture(m){const f=m.kpiFuture,c=db.config;document.getElementById('kpiFuture').innerHTML=[kpiTile('Wert der Immobilie',fmtEur(f.wert),{note:fmtEur(f.wertProQm)+' /m²'}),kpiTile('Restschuld',fmtEur(f.restschuld),{note:'Ende '+f.jahr}),kpiTile('Nettovermögen',fmtEur(f.nettovermoegen),{note:'Wert – Restschuld'}),kpiTile('Warmmiete',fmtEur(f.wm)+' /M',{note:'Nettokaltmiete '+fmtEur(f.nkm)}),kpiTile('Cashflow operativ',fmtEur(f.cfOperativ,0)+' /M',{ampelCls:ampel(f.cfOperativ,c.cfOp,false)}),kpiTile('Cashflow nach Steuer',fmtEur(f.cfNachSteuer,0)+' /M',{ampelCls:ampel(f.cfNachSteuer,c.cfSt,false)}),kpiTile('Bruttomietrendite',fmtPct(f.brutto,2),{note:'auf urspr. Kaufpreis'}),kpiTile('Break-even Zinssatz',fmtPct(f.zinsBreakEven,2),{note:'Zins für CF n.St. = 0'})].join('');}
+function renderDashboardCharts(m){const k=m.kpiNow;ioBar('chartIO',k.warmmiete,[{k:'Bewirtschaftung',v:k.bewirtGesamt},{k:'Zinsen',v:-k.cfZins},{k:'Tilgung',v:-k.cfTilg},{k:'Steuern',v:Math.max(0,k.steuer0)}]);}
 function renderVerlauf(m){
   const pal=PAL();const lbl=m.series.map(s=>s.jahr);
-  const sVermoegen=[
-    {name:'Immobilienwert',color:pal[0],data:m.series.map(s=>s.wertEnde),fill:true},
-    {name:'Restschuld',color:pal[5],data:m.series.map(s=>s.restEnde)},
-    {name:'Nettovermögen',color:pal[1],data:m.series.map(s=>s.wertEnde-s.restEnde)},
-  ];
-  lineChart('chartVermoegen',{labels:lbl,series:sVermoegen,yFmt:v=>fmtEur(v),zero:true});legend('legVermoegen',sVermoegen);
-  const sCF=[
-    {name:'Cashflow operativ',color:pal[0],data:m.series.map(s=>s.cfOpMonat)},
-    {name:'Cashflow nach Steuer',color:pal[1],data:m.series.map(s=>s.cfNachSteuerMonat),fill:true},
-  ];
+  const sV=[{name:'Immobilienwert',color:pal[0],data:m.series.map(s=>s.wertEnde),fill:true},{name:'Restschuld',color:pal[5],data:m.series.map(s=>s.restEnde)},{name:'Nettovermögen',color:pal[1],data:m.series.map(s=>s.wertEnde-s.restEnde)}];
+  lineChart('chartVermoegen',{labels:lbl,series:sV,yFmt:v=>fmtEur(v),zero:true});legend('legVermoegen',sV);
+  const sCF=[{name:'Cashflow operativ',color:pal[0],data:m.series.map(s=>s.cfOpMonat)},{name:'Cashflow nach Steuer',color:pal[1],data:m.series.map(s=>s.cfNachSteuerMonat),fill:true}];
   lineChart('chartCF',{labels:lbl,series:sCF,yFmt:v=>fmtEur(v),zero:true});legend('legCF',sCF);
-  const sT=[
-    {name:'Restschuld gesamt',color:pal[5],data:m.series.map(s=>s.restEnde),fill:true},
-    {name:'Darlehen I',color:pal[0],data:m.series.map(s=>s.restEnde1)},
-    {name:'Darlehen II',color:pal[3],data:m.series.map(s=>s.restEnde2)},
-  ];
+  const sT=[{name:'Restschuld gesamt',color:pal[5],data:m.series.map(s=>s.restEnde),fill:true},{name:'Darlehen 1',color:pal[0],data:m.series.map(s=>s.restEnde1)},{name:'Darlehen 2',color:pal[3],data:m.series.map(s=>s.restEnde2)}];
   lineChart('chartTilgung',{labels:lbl,series:sT,yFmt:v=>fmtEur(v),zero:true});legend('legTilgung',sT);
-  const sM=[
-    {name:'Warmmiete',color:pal[0],data:m.series.map(s=>s.wm),fill:true},
-    {name:'Nettokaltmiete',color:pal[1],data:m.series.map(s=>s.nkm)},
-  ];
+  const sM=[{name:'Warmmiete',color:pal[0],data:m.series.map(s=>s.wm),fill:true},{name:'Nettokaltmiete',color:pal[1],data:m.series.map(s=>s.nkm)}];
   lineChart('chartMiete',{labels:lbl,series:sM,yFmt:v=>fmtEur(v),zero:true});legend('legMiete',sM);
-  const pal2=PAL();
-  donut('donutInvest',[
-    {label:'Kaufpreis',value:m.KP,color:pal2[0]},
-    {label:'Kaufnebenkosten',value:m.nk.summeEur,color:pal2[2]},
-    {label:'Anf. Investition',value:m.invest.kosten,color:pal2[3]},
-  ],'Investition');
-  donut('donutFin',[
-    {label:'Eigenkapital',value:Math.max(0,m.fin.ek),color:pal2[1]},
-    {label:'Darlehen I',value:m.fin.dl1,color:pal2[0]},
-    {label:'Darlehen II',value:m.fin.dl2,color:pal2[3]},
-  ],'Finanzierung');
+  donut('donutInvest',[{label:'Kaufpreis',value:m.KP,color:pal[0]},{label:'Kaufnebenkosten',value:m.nk.summeEur,color:pal[2]},{label:'Anf. Investition',value:m.invest.kosten,color:pal[3]}],'Investition');
+  donut('donutFin',[{label:'Eigenkapital',value:Math.max(0,m.fin.ek),color:pal[1]},{label:'Darlehen 1',value:m.fin.dl1,color:pal[0]},{label:'Darlehen 2',value:m.fin.dl2,color:pal[3]}],'Finanzierung');
   renderTsTable(m);
 }
 function renderTsTable(m){
   const cols=[0,1,2,3,4,5,9,14,19,24,29,39,49].filter(i=>i<m.series.length);
   let head='<th>Jahr</th>'+cols.map(i=>`<th>${m.series[i].jahr}</th>`).join('');
-  const rowsDef=[
-    ['Warmmiete /M',s=>fmtEur(s.wm)],
-    ['Immobilienwert',s=>fmtEur(s.wertEnde)],
-    ['Restschuld',s=>fmtEur(s.restEnde)],
-    ['Nettovermögen',s=>fmtEur(s.wertEnde-s.restEnde)],
-    ['Zinsen /a',s=>fmtEur(s.zinsen)],
-    ['Tilgung /a',s=>fmtEur(s.tilgung)],
-    ['AfA /a',s=>fmtEur(s.afa)],
-    ['CF operativ /M',s=>fmtEur(s.cfOpMonat)],
-    ['CF n. Steuer /M',s=>fmtEur(s.cfNachSteuerMonat)],
-  ];
+  const rowsDef=[['Warmmiete /M',s=>fmtEur(s.wm)],['Immobilienwert',s=>fmtEur(s.wertEnde)],['Restschuld',s=>fmtEur(s.restEnde)],['Nettovermögen',s=>fmtEur(s.wertEnde-s.restEnde)],['Zinsen /a',s=>fmtEur(s.zinsen)],['Tilgung /a',s=>fmtEur(s.tilgung)],['AfA /a',s=>fmtEur(s.afa)],['CF operativ /M',s=>fmtEur(s.cfOpMonat)],['CF n. Steuer /M',s=>fmtEur(s.cfNachSteuerMonat)]];
   let body=rowsDef.map(r=>`<tr><td>${r[0]}</td>${cols.map(i=>`<td>${r[1](m.series[i])}</td>`).join('')}</tr>`).join('');
   document.getElementById('tsTable').innerHTML=`<table class="ts"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }
-
-/* =================================================================
-   RENDER: Bank
-   ================================================================= */
 function renderBank(m){
   const inp=active().inputs;
-  document.getElementById('bankHead').innerHTML=
-    `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px">
-      <div><div style="font-size:18px;font-weight:700">${inp.address||'–'}</div>
-      <div style="color:var(--muted);font-size:13px">Kaufdatum: ${new Date(inp.buyDate).toLocaleDateString('de-DE')}</div></div>
-      <div style="text-align:right"><div style="font-size:12px;color:var(--muted)">Gesamtinvestition</div><div style="font-size:20px;font-weight:700;color:var(--accent)">${fmtEur(m.gesamtInvest)}</div></div>
-    </div>`;
+  document.getElementById('bankHead').innerHTML=`<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><div><div style="font-size:18px;font-weight:700">${inp.address||'–'}</div><div style="color:var(--muted);font-size:13px">Kaufdatum: ${new Date(inp.buyDate).toLocaleDateString('de-DE')}</div></div><div style="text-align:right"><div style="font-size:12px;color:var(--muted)">Gesamtinvestition</div><div style="font-size:20px;font-weight:700;color:var(--accent)">${fmtEur(m.gesamtInvest)}</div></div></div>`;
   const blk=(title,rows)=>`<div class="card bank-block"><h4>${title}</h4>${rows.map(r=>SR(r[0],r[1],r[2]||'')).join('')}</div>`;
-  document.getElementById('bankBody').innerHTML=
-    blk('Investition',[
-      ['Wohnfläche',fmtNum(m.WF)+' m²'],['Kaufpreis pro m²',fmtEur(m.KP/m.WF)],
-      ['Kaufpreis',fmtEur(m.KP)],['Kaufnebenkosten',fmtEur(m.nk.summeEur)],
-      ['Zusätzl. Investition',fmtEur(m.invest.kosten)],['Gesamt',fmtEur(m.gesamtInvest)],
-    ])+
-    blk('Finanzierung',[
-      ['Darlehen I',fmtEur(m.fin.dl1)],['Darlehen II',fmtEur(m.fin.dl2)],
-      ['Eigenkapital',fmtEur(m.fin.ek)],['Zinssatz gewichtet',fmtPct(m.fin.zinsGew,2)],
-      ['Anf. Tilgung gewichtet',fmtPct(m.fin.tilgGew,2)],['Kapitaldienst / Monat',fmtEur(m.fin.kdGesamt)],
-    ])+
-    blk('Rentabilität',[
-      ['Nettokaltmiete /M',fmtEur(m.miete.nettokaltmiete)],['Bruttomietrendite',fmtPct(m.kpiNow.brutto,2)],
-      ['Kaufpreisfaktor',fmtNum(m.kpiNow.faktor,1)],['Cashflow operativ /M',fmtEur(m.kpiNow.cfOperativ),m.kpiNow.cfOperativ>=0?'pos':'neg'],
-      ['Cashflow n. Steuer /M',fmtEur(m.kpiNow.cfNachSteuer),m.kpiNow.cfNachSteuer>=0?'pos':'neg'],['Eigenkapitalrendite',fmtPct(m.kpiNow.ekRendite,1)],
-    ]);
+  document.getElementById('bankBody').innerHTML=blk('Investition',[['Wohnfläche',fmtNum(m.WF)+' m²'],['Kaufpreis pro m²',fmtEur(m.KP/m.WF)],['Kaufpreis',fmtEur(m.KP)],['Kaufnebenkosten',fmtEur(m.nk.summeEur)],['Zusätzl. Investition',fmtEur(m.invest.kosten)],['Gesamt',fmtEur(m.gesamtInvest)]])+blk('Finanzierung',[['Darlehen 1',fmtEur(m.fin.dl1)],['Darlehen 2',fmtEur(m.fin.dl2)],['Eigenkapital',fmtEur(m.fin.ek)],['Zinssatz gewichtet',fmtPct(m.fin.zinsGew,2)],['Anf. Tilgung gewichtet',fmtPct(m.fin.tilgGew,2)],['Kapitaldienst / Monat',fmtEur(m.fin.kdGesamt)]])+blk('Rentabilität',[['Nettokaltmiete /M',fmtEur(m.miete.nettokaltmiete)],['Bruttomietrendite',fmtPct(m.kpiNow.brutto,2)],['Kaufpreisfaktor',fmtNum(m.kpiNow.faktor,1)],['Cashflow operativ /M',fmtEur(m.kpiNow.cfOperativ),m.kpiNow.cfOperativ>=0?'pos':'neg'],['Cashflow n. Steuer /M',fmtEur(m.kpiNow.cfNachSteuer),m.kpiNow.cfNachSteuer>=0?'pos':'neg'],['Eigenkapitalrendite',fmtPct(m.kpiNow.ekRendite,1)]]);
 }
 
-/* =================================================================
-   SZENARIO
-   ================================================================= */
-const SLIDERS=[
-  {k:'kaufpreis',l:'Kaufpreis',min:20000,max:500000,step:1000,fmt:v=>fmtEur(v)},
-  {k:'dl1AnteilPct',l:'Darlehensanteil',min:0,max:110,step:1,fmt:v=>fmtNum(v)+' %'},
-  {k:'dl1Zins',l:'Zinssatz Darlehen I',min:0,max:8,step:0.1,fmt:v=>fmtNum(v,1)+' %'},
-  {k:'dl1Tilgung',l:'Anf. Tilgung Darlehen I',min:0.5,max:10,step:0.5,fmt:v=>fmtNum(v,1)+' %'},
-  {k:'mietProQm',l:'Kaltmiete pro m²',min:3,max:30,step:0.5,fmt:v=>fmtEur(v)},
-  {k:'mietsteigerung',l:'Mietsteigerung p.a.',min:0,max:6,step:0.5,fmt:v=>fmtNum(v,1)+' %'},
-  {k:'wertsteigerung',l:'Wertsteigerung p.a.',min:-2,max:6,step:0.5,fmt:v=>fmtNum(v,1)+' %'},
-  {k:'grenzsteuersatz',l:'Grenzsteuersatz',min:0,max:48,step:1,fmt:v=>fmtNum(v)+' %'},
-];
-function scnInputs(){const base=Object.assign({},activeInputs(),scnOverrides);
-  if(scnOverrides.mietProQm!=null){base.mietModus='qm';base.mietBetrag=scnOverrides.mietProQm;}
-  return base;}
+/* ============ SZENARIEN (dynamische Regler) ============ */
+function sliderDefs(){
+  const i=activeInputs();const KP=N(i.kaufpreis)||1;const WF=N(i.wohnflaeche)||1;const m=calc(i);
+  const curQm=WF?m.miete.kaltGesamt/WF:0;const curDlPct=KP?m.fin.dl1/KP*100:0;
+  const span=KP*0.4;const kpStep=span>200000?2000:(span>40000?1000:(span>8000?500:100));
+  const qmMax=Math.round(Math.max(curQm*1.5,curQm+5)*10)/10;
+  return [
+    {k:'kaufpreis',l:'Kaufpreis (±20 %)',min:Math.round(KP*0.8),max:Math.round(KP*1.2),step:kpStep,fmt:v=>fmtEur(v),def:KP},
+    {k:'_dl1pct',l:'Darlehensanteil (Darl. 1)',min:0,max:110,step:1,fmt:v=>fmtNum(v,0)+' %',def:Math.round(curDlPct*10)/10},
+    {k:'dl1Zins',l:'Zinssatz Darlehen 1',min:0,max:8,step:0.1,fmt:v=>fmtNum(v,1)+' %',def:N(i.dl1Zins)},
+    {k:'dl1Tilgung',l:'Anf. Tilgung Darlehen 1',min:0.5,max:10,step:0.1,fmt:v=>fmtNum(v,1)+' %',def:N(i.dl1Tilgung)},
+    {k:'_mietqm',l:'Kaltmiete pro m²',min:0,max:qmMax||20,step:0.1,fmt:v=>fmtEur(v,2),def:Math.round(curQm*100)/100},
+    {k:'mietsteigerung',l:'Mietsteigerung p.a.',min:0,max:6,step:0.1,fmt:v=>fmtNum(v,1)+' %',def:N(i.mietsteigerung)},
+    {k:'wertsteigerung',l:'Wertsteigerung p.a.',min:-2,max:6,step:0.1,fmt:v=>fmtNum(v,1)+' %',def:N(i.wertsteigerung)},
+    {k:'grenzsteuersatz',l:'Grenzsteuersatz',min:0,max:48,step:1,fmt:v=>fmtNum(v,0)+' %',def:N(i.grenzsteuersatz)},
+  ];
+}
+function scnInputs(){
+  const base=Object.assign({},activeInputs());
+  for(const k in scnOverrides){const v=scnOverrides[k];
+    if(k==='_dl1pct'){base.dl1Modus='pct';base.dl1Betrag=v;}
+    else if(k==='_mietqm'){base.mietModus='qm';base.mietBetrag=v;}
+    else base[k]=v;}
+  return base;
+}
 function renderSliders(){
-  const base=activeInputs();
-  document.getElementById('sliders').innerHTML=SLIDERS.map(s=>{
-    const v=scnOverrides[s.k]!=null?scnOverrides[s.k]:base[s.k];
-    return `<div class="slider-row"><div class="top"><label>${s.l}</label><span class="v" data-sv="${s.k}">${s.fmt(v)}</span></div>
-      <input type="range" data-slider="${s.k}" min="${s.min}" max="${s.max}" step="${s.step}" value="${v}">
-      <div class="scn-delta" data-sd="${s.k}"></div></div>`;
-  }).join('');
-  document.querySelectorAll('[data-slider]').forEach(el=>el.addEventListener('input',()=>{
-    const k=el.dataset.slider;scnOverrides[k]=parseFloat(el.value);
-    const s=SLIDERS.find(x=>x.k===k);document.querySelector(`[data-sv="${k}"]`).textContent=s.fmt(parseFloat(el.value));
-    renderScenario();
-  }));
+  const defs=sliderDefs();
+  document.getElementById('sliders').innerHTML=defs.map(s=>{const v=scnOverrides[s.k]!=null?scnOverrides[s.k]:s.def;return `<div class="slider-row"><div class="top"><label>${s.l}</label><span class="v" data-sv="${s.k}">${s.fmt(v)}</span></div><input type="range" data-slider="${s.k}" min="${s.min}" max="${s.max}" step="${s.step}" value="${v}"><div class="scn-delta" data-sd="${s.k}"></div></div>`;}).join('');
+  document.querySelectorAll('[data-slider]').forEach(el=>el.addEventListener('input',()=>{const k=el.dataset.slider;scnOverrides[k]=parseFloat(el.value);const s=defs.find(x=>x.k===k);document.querySelector(`[data-sv="${k}"]`).textContent=s.fmt(parseFloat(el.value));renderScenario();}));
 }
-function scnKpiTile(lab,baseV,scnV,fmt,higherBetter=true){
-  const d=scnV-baseV;const arrow=Math.abs(d)<1e-9?'':(d>0?'▲':'▼');
-  const good=higherBetter?d>0:d<0;const col=Math.abs(d)<1e-9?'var(--muted)':(good?'var(--green)':'var(--red)');
-  return `<div class="kpi"><div class="lab">${lab}</div><div class="val">${fmt(scnV)}</div><div class="note" style="color:${col};font-weight:600">${arrow} ${fmt(baseV)} → Δ ${fmt(d)}</div></div>`;
-}
+function scnKpiTile(lab,baseV,scnV,fmt,higherBetter){higherBetter=higherBetter!==false;const d=scnV-baseV;const arrow=Math.abs(d)<1e-9?'':(d>0?'▲':'▼');const good=higherBetter?d>0:d<0;const col=Math.abs(d)<1e-9?'var(--muted)':(good?'var(--green)':'var(--red)');return `<div class="kpi"><div class="lab">${lab}</div><div class="val">${fmt(scnV)}</div><div class="note" style="color:${col};font-weight:600">${arrow} ${fmt(baseV)} → Δ ${fmt(d)}</div></div>`;}
 function renderScenario(){
+  const defs=sliderDefs();
   const base=calc(activeInputs());const scn=calc(scnInputs());
-  const b=activeInputs();
-  SLIDERS.forEach(s=>{const el=document.querySelector(`[data-sd="${s.k}"]`);if(!el)return;
-    const cur=scnOverrides[s.k]!=null?scnOverrides[s.k]:b[s.k];const d=cur-b[s.k];
-    el.textContent=Math.abs(d)<1e-9?'':'Δ '+s.fmt(d);el.style.color=d===0?'var(--muted)':'var(--accent)';});
-  document.getElementById('scnKpi').innerHTML=[
-    scnKpiTile('Bruttomietrendite',base.kpiNow.brutto,scn.kpiNow.brutto,v=>fmtPct(v,2)),
-    scnKpiTile('Eigenkapitalrendite',base.kpiNow.ekRendite||0,scn.kpiNow.ekRendite||0,v=>fmtPct(v,1)),
-    scnKpiTile('Cashflow operativ /M',base.kpiNow.cfOperativ,scn.kpiNow.cfOperativ,v=>fmtEur(v)),
-    scnKpiTile('Cashflow n.St. /M',base.kpiNow.cfNachSteuer,scn.kpiNow.cfNachSteuer,v=>fmtEur(v)),
-    scnKpiTile('Eigenkapital',base.fin.ek,scn.fin.ek,v=>fmtEur(v),false),
-    scnKpiTile('Vermögen n. '+scn.kpiFuture.jahr,base.kpiFuture.nettovermoegen,scn.kpiFuture.nettovermoegen,v=>fmtEur(v)),
-  ].join('');
+  defs.forEach(s=>{const el=document.querySelector(`[data-sd="${s.k}"]`);if(!el)return;const cur=scnOverrides[s.k]!=null?scnOverrides[s.k]:s.def;const d=cur-s.def;el.textContent=Math.abs(d)<1e-9?'':'Δ '+s.fmt(d);el.style.color=Math.abs(d)<1e-9?'var(--muted)':'var(--accent)';});
+  document.getElementById('scnKpi').innerHTML=[scnKpiTile('Bruttomietrendite',base.kpiNow.brutto,scn.kpiNow.brutto,v=>fmtPct(v,2)),scnKpiTile('Eigenkapitalrendite',base.kpiNow.ekRendite||0,scn.kpiNow.ekRendite||0,v=>fmtPct(v,1)),scnKpiTile('Cashflow operativ /M',base.kpiNow.cfOperativ,scn.kpiNow.cfOperativ,v=>fmtEur(v)),scnKpiTile('Cashflow n.St. /M',base.kpiNow.cfNachSteuer,scn.kpiNow.cfNachSteuer,v=>fmtEur(v)),scnKpiTile('Eigenkapital',base.fin.ek,scn.fin.ek,v=>fmtEur(v),false),scnKpiTile('Vermögen n. '+scn.kpiFuture.jahr,base.kpiFuture.nettovermoegen,scn.kpiFuture.nettovermoegen,v=>fmtEur(v))].join('');
   const pal=PAL();const lbl=base.series.map(s=>s.jahr);
   const sCF=[{name:'Basis',color:pal[6],data:base.series.map(s=>s.cfNachSteuerMonat)},{name:'Szenario',color:pal[0],data:scn.series.map(s=>s.cfNachSteuerMonat),fill:true}];
   lineChart('scnChartCF',{labels:lbl,series:sCF,yFmt:v=>fmtEur(v),zero:true});legend('scnLegCF',sCF);
-  const sV=[{name:'Basis',color:pal[6],data:base.series.map(s=>s.wertEnde-s.restEnde)},{name:'Szenario',color:pal[1],data:scn.series.map(s=>s.wertEnde-s.restEnde),fill:true}];
-  lineChart('scnChartVerm',{labels:lbl,series:sV,yFmt:v=>fmtEur(v),zero:true});legend('scnLegVerm',sV);
+  const sVe=[{name:'Basis',color:pal[6],data:base.series.map(s=>s.wertEnde-s.restEnde)},{name:'Szenario',color:pal[1],data:scn.series.map(s=>s.wertEnde-s.restEnde),fill:true}];
+  lineChart('scnChartVerm',{labels:lbl,series:sVe,yFmt:v=>fmtEur(v),zero:true});legend('scnLegVerm',sVe);
 }
 
-/* =================================================================
-   KONFIG
-   ================================================================= */
+/* ============ KONFIG ============ */
 const CFG_ROWS=[['brutto','Bruttomietrendite','%'],['netto','Nettomietrendite','%'],['ek','Eigenkapitalrendite','%'],['cfOp','Cashflow operativ','€'],['cfSt','Cashflow nach Steuer','€']];
 function renderKonfig(){
   let html=`<table class="inv" style="font-size:13px"><tr><th>Kennzahl</th><th style="color:var(--green)">Grün ≥</th><th style="color:var(--amber)">Gelb ≥</th><th style="color:var(--red)">Rot &lt;</th><th></th></tr>`;
-  html+=CFG_ROWS.map(r=>{const c=db.config[r[0]];
-    return `<tr><td style="font-weight:500">${r[1]}</td>
-    <td style="width:70px"><input type="number" data-cfg="${r[0]}" data-b="g" value="${c.g}"></td>
-    <td style="width:70px"><input type="number" data-cfg="${r[0]}" data-b="y" value="${c.y}"></td>
-    <td style="width:70px"><input type="number" data-cfg="${r[0]}" data-b="r" value="${c.r}"></td>
-    <td style="color:var(--faint)">${r[2]}</td></tr>`;}).join('');
+  html+=CFG_ROWS.map(r=>{const c=db.config[r[0]];return `<tr><td style="font-weight:500">${r[1]}</td><td style="width:70px"><input type="number" data-cfg="${r[0]}" data-b="g" value="${c.g}"></td><td style="width:70px"><input type="number" data-cfg="${r[0]}" data-b="y" value="${c.y}"></td><td style="width:70px"><input type="number" data-cfg="${r[0]}" data-b="r" value="${c.r}"></td><td style="color:var(--faint)">${r[2]}</td></tr>`;}).join('');
   html+=`</table>`;
   document.getElementById('konfigBody').innerHTML=html;
-  document.querySelectorAll('[data-cfg]').forEach(el=>el.addEventListener('input',()=>{
-    db.config[el.dataset.cfg][el.dataset.b]=parseFloat(el.value)||0;scheduleSave();recompute();}));
+  document.querySelectorAll('[data-cfg]').forEach(el=>el.addEventListener('input',()=>{db.config[el.dataset.cfg][el.dataset.b]=parseFloat(el.value)||0;scheduleSave();recompute();}));
 }
 
-/* =================================================================
-   RECOMPUTE / RENDER ALL
-   ================================================================= */
+/* ============ RECOMPUTE / NAV ============ */
 let MODEL=null;
 function recompute(){
   MODEL=calc(activeInputs());
@@ -1210,36 +976,11 @@ function syncDashYear(){
   if(+sl.value<+sl.min||+sl.value>+sl.max||!sl.dataset.init){sl.value=inp.hochrechnungJahr;sl.dataset.init=1;}
   document.getElementById('dashYearLbl').textContent=sl.value;
 }
-
-/* =================================================================
-   PROPERTY MGMT
-   ================================================================= */
-function renderPropSelect(){
-  const s=document.getElementById('propSelect');
-  s.innerHTML=db.properties.map(p=>`<option value="${p.id}" ${p.id===db.activeId?'selected':''}>${p.name}</option>`).join('');
-}
-function switchProperty(id){db.activeId=id;scnOverrides={};saveDB();renderPropSelect();renderInputs();renderSliders();recompute();}
-
-/* =================================================================
-   MODAL / TOAST
-   ================================================================= */
-let modalCb=null;
-function modal(title,val,cb){document.getElementById('modalTitle').textContent=title;const i=document.getElementById('modalInput');i.value=val||'';modalCb=cb;document.getElementById('modalBg').classList.add('show');setTimeout(()=>i.focus(),50);}
-function closeModal(){document.getElementById('modalBg').classList.remove('show');modalCb=null;}
+function renderPropSelect(){const s=document.getElementById('propSelect');s.innerHTML=db.properties.map(p=>`<option value="${p.id}" ${p.id===db.activeId?'selected':''}>${p.name}</option>`).join('');}
+function switchProperty(id){db.activeId=id;scnOverrides={};einGroup='allgemein';saveDB();renderPropSelect();renderInputs();renderSliders();recompute();}
 let toastT;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200);}
 let saveT;function scheduleSave(){clearTimeout(saveT);saveT=setTimeout(saveDB,400);}
-
-/* =================================================================
-   THEME
-   ================================================================= */
-function applyTheme(){document.documentElement.setAttribute('data-theme',db.theme);
-  document.getElementById('themeIcon').innerHTML=db.theme==='dark'
-    ?'<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>'
-    :'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';}
-
-/* =================================================================
-   NAV
-   ================================================================= */
+function applyTheme(){document.documentElement.setAttribute('data-theme',db.theme);document.getElementById('themeIcon').innerHTML=db.theme==='dark'?'<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';}
 function showView(v){
   currentView=v;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===v));
@@ -1252,13 +993,33 @@ function showView(v){
   window.scrollTo(0,0);
 }
 
-/* =================================================================
-   INIT & EVENTS
-   ================================================================= */
+/* ============ MODAL ============ */
+let modalCb=null;
+function modalName(title,val,cb){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalBody').innerHTML=`<div class="inp"><input id="modalInput" type="text" value="${(val||'').replace(/"/g,'&quot;')}"></div>`;
+  modalCb=()=>cb(document.getElementById('modalInput').value||'Unbenannt');
+  document.getElementById('modalBg').classList.add('show');
+  setTimeout(()=>{const i=document.getElementById('modalInput');if(i){i.focus();i.select();}},50);
+}
+function modalNewProperty(cb){
+  document.getElementById('modalTitle').textContent='Neue Immobilie anlegen';
+  document.getElementById('modalBody').innerHTML=`
+    <div class="inp"><input id="modalInput" type="text" placeholder="Name / Adresse" value="Neue Immobilie"></div>
+    <div class="choice">
+      <label><input type="radio" name="npmode" value="default" checked><span><b>Leere Standardwerte</b><small>Mit den Vorgabewerten starten.</small></span></label>
+      <label><input type="radio" name="npmode" value="copy"><span><b>Aktuelle Immobilie übernehmen</b><small>Eingaben von „${(active().name||'').replace(/"/g,'&quot;')}" kopieren.</small></span></label>
+    </div>`;
+  modalCb=()=>{const name=document.getElementById('modalInput').value||'Unbenannt';const mode=(document.querySelector('input[name="npmode"]:checked')||{}).value;cb(name,mode==='copy');};
+  document.getElementById('modalBg').classList.add('show');
+  setTimeout(()=>{const i=document.getElementById('modalInput');if(i){i.focus();i.select();}},50);
+}
+function closeModal(){document.getElementById('modalBg').classList.remove('show');modalCb=null;}
+
+/* ============ INIT ============ */
 function init(){
   loadDB();loadGH();applyTheme();
   renderPropSelect();renderInputs();renderKonfig();renderGitHub();recompute();
-
   document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>showView(n.dataset.view)));
   document.querySelectorAll('.bottomnav .bn').forEach(n=>n.addEventListener('click',()=>showView(n.dataset.view)));
   const topActions=document.getElementById('topActions');
@@ -1266,49 +1027,37 @@ function init(){
   topActions.querySelectorAll('.icon-btn').forEach(b=>b.addEventListener('click',()=>topActions.classList.remove('open')));
   document.addEventListener('click',e=>{if(!topActions.contains(e.target)&&e.target.id!=='btnMenu'&&!document.getElementById('btnMenu').contains(e.target))topActions.classList.remove('open');});
   document.getElementById('propSelect').addEventListener('change',e=>switchProperty(e.target.value));
-  document.getElementById('btnNew').addEventListener('click',()=>modal('Name der neuen Immobilie','Neue Immobilie',name=>{
-    const p=newProperty(name);db.properties.push(p);switchProperty(p.id);toast('Immobilie angelegt');}));
-  document.getElementById('btnRename').addEventListener('click',()=>modal('Immobilie umbenennen',active().name,name=>{active().name=name;saveDB();renderPropSelect();recompute();}));
+  document.getElementById('btnNew').addEventListener('click',()=>modalNewProperty((name,copy)=>{const p=newProperty(name, copy?active().inputs:null);db.properties.push(p);switchProperty(p.id);toast(copy?'Immobilie übernommen':'Immobilie angelegt');}));
+  document.getElementById('btnRename').addEventListener('click',()=>modalName('Immobilie umbenennen',active().name,name=>{active().name=name;saveDB();renderPropSelect();recompute();}));
   document.getElementById('btnDup').addEventListener('click',()=>{const c=JSON.parse(JSON.stringify(active()));c.id='p'+Date.now()+Math.random().toString(36).slice(2,6);c.name=active().name+' (Kopie)';c.created=c.updated=Date.now();db.properties.push(c);switchProperty(c.id);toast('Dupliziert');});
-  document.getElementById('btnDel').addEventListener('click',()=>{
-    if(db.properties.length<=1){toast('Mindestens eine Immobilie muss bestehen bleiben');return;}
-    if(!confirm('Immobilie „'+active().name+'" wirklich löschen?'))return;
-    db.properties=db.properties.filter(p=>p.id!==db.activeId);db.activeId=db.properties[0].id;saveDB();renderPropSelect();renderInputs();renderSliders();recompute();toast('Gelöscht');});
-  document.getElementById('btnTheme').addEventListener('click',()=>{db.theme=db.theme==='dark'?'light':'dark';applyTheme();saveDB();
-    recompute();if(currentView==='verlauf')renderVerlauf(MODEL);if(currentView==='szenario')renderScenario();});
-  document.getElementById('btnExport').addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);a.download='immobilien-kalkulation-'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('Exportiert');});
+  document.getElementById('btnDel').addEventListener('click',()=>{if(db.properties.length<=1){toast('Mindestens eine Immobilie muss bestehen bleiben');return;}if(!confirm('Immobilie „'+active().name+'" wirklich löschen?'))return;db.properties=db.properties.filter(p=>p.id!==db.activeId);db.activeId=db.properties[0].id;saveDB();renderPropSelect();renderInputs();renderSliders();recompute();toast('Gelöscht');});
+  document.getElementById('btnTheme').addEventListener('click',()=>{db.theme=db.theme==='dark'?'light':'dark';applyTheme();saveDB();recompute();if(currentView==='verlauf')renderVerlauf(MODEL);if(currentView==='szenario')renderScenario();});
+  document.getElementById('btnExport').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='immobilien-kalkulation-'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('Exportiert');});
   document.getElementById('btnImport').addEventListener('click',()=>document.getElementById('fileImport').click());
   document.getElementById('btnSync').addEventListener('click',()=>{if(gh.token){ghPush();}else{showView('konfig');toast('Bitte zuerst GitHub-Token hinterlegen');}});
   document.getElementById('fileImport').addEventListener('change',e=>{
     const f=e.target.files[0];if(!f)return;const rd=new FileReader();
     rd.onload=()=>{try{const d=JSON.parse(rd.result);
       if(d.properties&&d.properties.length){
-        if(confirm('Import: vorhandene Objekte ersetzen (OK) oder hinzufügen (Abbrechen)?')){db=d;if(!db.config)db.config=JSON.parse(JSON.stringify(DEFAULT_CONFIG));if(!db.theme)db.theme='light';}
+        if(confirm('Import: vorhandene Objekte ersetzen (OK) oder hinzufügen (Abbrechen)?')){db=d;}
         else{d.properties.forEach(p=>{p.id='p'+Date.now()+Math.random().toString(36).slice(2,6);db.properties.push(p);});}
-        db.activeId=db.properties[db.properties.length-1].id;
-        migrateDB();
+        db.activeId=db.properties[db.properties.length-1].id;migrateDB();
         applyTheme();saveDB();renderPropSelect();renderInputs();renderSliders();recompute();toast('Importiert');
       }else toast('Ungültige Datei');
     }catch(err){toast('Import fehlgeschlagen');}};rd.readAsText(f);e.target.value='';});
-  document.getElementById('dashYear').addEventListener('input',e=>{
-    document.getElementById('dashYearLbl').textContent=e.target.value;active().inputs.hochrechnungJahr=+e.target.value;scheduleSave();
-    MODEL=calc(activeInputs());renderKpiFuture(MODEL);});
+  document.getElementById('dashYear').addEventListener('input',e=>{document.getElementById('dashYearLbl').textContent=e.target.value;active().inputs.hochrechnungJahr=+e.target.value;scheduleSave();MODEL=calc(activeInputs());renderKpiFuture(MODEL);});
   document.getElementById('btnPrint').addEventListener('click',()=>window.print());
   document.getElementById('scnReset').addEventListener('click',()=>{scnOverrides={};renderSliders();renderScenario();});
-  document.getElementById('scnApply').addEventListener('click',()=>{
-    Object.assign(active().inputs,scnOverrides);
-    if(scnOverrides.mietProQm!=null){active().inputs.mietModus='qm';active().inputs.mietBetrag=scnOverrides.mietProQm;}
-    scnOverrides={};saveDB();renderInputs();renderSliders();recompute();toast('Szenario übernommen');});
+  document.getElementById('scnApply').addEventListener('click',()=>{for(const k in scnOverrides){const v=scnOverrides[k];if(k==='_dl1pct'){active().inputs.dl1Modus='pct';active().inputs.dl1Betrag=v;}else if(k==='_mietqm'){active().inputs.mietModus='qm';active().inputs.mietBetrag=v;}else active().inputs[k]=v;}scnOverrides={};saveDB();renderInputs();renderSliders();recompute();toast('Szenario übernommen');});
   document.getElementById('cfgReset').addEventListener('click',()=>{db.config=JSON.parse(JSON.stringify(DEFAULT_CONFIG));saveDB();renderKonfig();recompute();});
-  document.getElementById('modalOk').addEventListener('click',()=>{if(modalCb)modalCb(document.getElementById('modalInput').value||'Unbenannt');closeModal();});
+  document.getElementById('modalOk').addEventListener('click',()=>{const cb=modalCb;closeModal();if(cb)cb();});
   document.getElementById('modalCancel').addEventListener('click',closeModal);
-  document.getElementById('modalInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('modalOk').click();if(e.key==='Escape')closeModal();});
+  document.getElementById('modalBg').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('modalOk').click();if(e.key==='Escape')closeModal();});
   document.getElementById('modalBg').addEventListener('click',e=>{if(e.target.id==='modalBg')closeModal();});
   window.addEventListener('resize',()=>{if(currentView==='verlauf')renderVerlauf(MODEL);if(currentView==='szenario')renderScenario();});
 }
-init();
+if(typeof module!=='undefined')module.exports={calc,DEFAULTS,parseDE,fmtFixed,fmtTrim,liveFmt,FMT};
+if(typeof document!=='undefined')init();
 </script>
 </body>
 </html>
