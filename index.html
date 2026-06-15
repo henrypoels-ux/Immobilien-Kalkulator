@@ -343,7 +343,8 @@ const DEFAULTS = {
     {name:'Sonstiges', kosten:0, aktivieren:true, wertsteigerung:0},
   ],
   mietModus:'qm', mietBetrag:11, mietProQm:11, stellplatzMiete:45, sonstigesMiete:0,
-  afaSatz:2, gebaeudeAnteil:75, grenzsteuersatz:42,
+  mietErweitert:false, einheiten:[],
+  afaSatz:2, afaModus:'linear', degAfaSatz:5, gebaeudeAnteil:75, grenzsteuersatz:42, steuerStruktur:'privat', gmbhSteuersatz:15.83,
   hausgeldUml:90, grundsteuer:9, sonstigesUml:0,
   hausgeldNichtUml:49, wegRuecklage:23, instandQm:10, kalkMietausfall:3, sonstigesNichtUml:0,
   kostensteigerung:2, mietsteigerung:3, wertsteigerung:2,
@@ -374,9 +375,30 @@ function volltilgungJahr(rows, buyYear){
   for(const r of rows) if(r.restEnde<=0.005) return buyYear+r.t;
   return null;
 }
+// AfA-Plan: 'linear' (Bestand) oder 'degressiv' (Neubau, % auf Restbuchwert, Wechsel zur linearen AfA)
+function afaSchedule(basis, modus, linSatz, degSatz, years){
+  const arr=[]; let rest=basis;
+  const linRate=(linSatz||0)/100;
+  if(modus!=='degressiv'){
+    for(let t=0;t<years;t++){const a=Math.min(linRate*basis, Math.max(rest,0)); arr.push(a); rest=Math.max(rest-a,0);}
+    return arr;
+  }
+  const degRate=(degSatz||0)/100;
+  const nutzungsdauer = linRate>0 ? Math.round(1/linRate) : 50;
+  let switched=false;
+  for(let t=0;t<years;t++){
+    if(rest<=0){arr.push(0);continue;}
+    const remYears=Math.max(nutzungsdauer-t,1);
+    const linAlt=rest/remYears;
+    const deg=degRate*rest;
+    let a = (!switched && deg>=linAlt) ? deg : (switched=true, linAlt);
+    a=Math.min(a, rest); arr.push(a); rest=Math.max(rest-a,0);
+  }
+  return arr;
+}
 function calc(input){
   const inp=Object.assign({},DEFAULTS,input);
-  const KP=N(inp.kaufpreis), WF=N(inp.wohnflaeche);
+  const KP=N(inp.kaufpreis); let WF=N(inp.wohnflaeche);
   const buyYear=new Date(inp.buyDate).getFullYear()||2025;
   const nkPct={makler:inp.maklerPct/100,notar:inp.notarPct/100,grundbuch:inp.grundbuchPct/100,grunderwerb:inp.grunderwerbPct/100,sonstige:inp.sonstigeNkPct/100};
   const nkEur={}; let nkSummePct=0,nkSummeEur=0;
@@ -390,9 +412,19 @@ function calc(input){
   const grenze15=0.15*gebAnteil*(KP+nkSummeEur)*1.19;
   const gesamtInvest=KP+nkSummeEur+investKosten;
   const neuerWert=KP+investWert;
-  const _mModus=inp.mietModus||'qm';
-  const _mBetrag=inp.mietBetrag!=null?N(inp.mietBetrag):N(inp.mietProQm);
-  const kaltGesamt=_mModus==='monat'?_mBetrag:(_mModus==='jahr'?_mBetrag/12:WF*_mBetrag);
+  const erweitert=!!inp.mietErweitert && Array.isArray(inp.einheiten) && inp.einheiten.length>0;
+  let kaltGesamt, effSteig, unitMonthly=[], unitSteig=[];
+  if(erweitert){
+    inp.einheiten.forEach(u=>{const m=u.modus==='qm'?N(u.betrag)*N(u.flaeche):N(u.betrag);unitMonthly.push(m);unitSteig.push(N(u.steigerung));});
+    WF=sum(inp.einheiten.map(u=>N(u.flaeche)));
+    kaltGesamt=sum(unitMonthly);
+    const tot=sum(unitMonthly); effSteig=tot?unitMonthly.reduce((s,m,j)=>s+m*unitSteig[j],0)/tot:N(inp.mietsteigerung);
+  } else {
+    const _mModus=inp.mietModus||'qm';
+    const _mBetrag=inp.mietBetrag!=null?N(inp.mietBetrag):N(inp.mietProQm);
+    kaltGesamt=_mModus==='monat'?_mBetrag:(_mModus==='jahr'?_mBetrag/12:WF*_mBetrag);
+    effSteig=N(inp.mietsteigerung);
+  }
   const nettokaltmiete=kaltGesamt+N(inp.stellplatzMiete)+N(inp.sonstigesMiete);
   const umlSumme=N(inp.hausgeldUml)+N(inp.grundsteuer)+N(inp.sonstigesUml);
   const warmmiete=nettokaltmiete+umlSumme;
@@ -415,21 +447,26 @@ function calc(input){
   const zinsGew=dlGesamt?(z1*dl1+z2*dl2)/dlGesamt:0;
   const tilgGew=dlGesamt?(t1*dl1+t2*dl2)/dlGesamt:0;
   const kdGesamt=kd1+kd2;
-  const afaJahr=inp.afaSatz/100*afaBasis, afaMonat=afaJahr/12;
+  const steuersatz=(inp.steuerStruktur==='gmbh'?N(inp.gmbhSteuersatz):N(inp.grenzsteuersatz))/100;
   const years=inp.jahre||50;
+  const afaArr=afaSchedule(afaBasis, inp.afaModus||'linear', N(inp.afaSatz), N(inp.degAfaSatz), years);
+  const afaJahr=afaArr[0], afaMonat=afaArr[0]/12;
   const za1=_za(inp.dl1Zinsbindung,inp.dl1Anschlusszins);
   const za2=_za(inp.dl2Zinsbindung,inp.dl2Anschlusszins);
   const a1=amortize(dl1,z1,t1,years,inp.sonder1,za1);
   const a2=amortize(dl2,z2,t2,years,inp.sonder2,za2);
-  const series=[]; let kumAfa=0;
+  const stSon=N(inp.stellplatzMiete)+N(inp.sonstigesMiete);
+  const series=[];
   for(let t=0;t<years;t++){
-    const nkm=nettokaltmiete*Math.pow(1+inp.mietsteigerung/100,t);
+    const nkm=erweitert
+      ? unitMonthly.reduce((s,m,j)=>s+m*Math.pow(1+unitSteig[j]/100,t),0)+stSon*Math.pow(1+effSteig/100,t)
+      : nettokaltmiete*Math.pow(1+inp.mietsteigerung/100,t);
     const uf=umlSumme*Math.pow(1+inp.kostensteigerung/100,t);
     const wm=nkm+uf;
     const wertAnfang=neuerWert*Math.pow(1+inp.wertsteigerung/100,t);
     const wertImJahr=wertAnfang*(inp.wertsteigerung/100);
     const wertEnde=wertAnfang+wertImJahr;
-    const afa=Math.min(afaJahr,Math.max(afaBasis-kumAfa,0)); kumAfa+=afa;
+    const afa=afaArr[t];
     const restAnfang=a1[t].restAnfang+a2[t].restAnfang;
     const restEnde=a1[t].restEnde+a2[t].restEnde;
     const zinsen=a1[t].zinsen+a2[t].zinsen;
@@ -438,7 +475,7 @@ function calc(input){
     const cfOpMonat=wm-bewirtT-zinsen/12-tilgung/12;
     const bewirtSteuerT=(bewirtGesamt-instandEigen-kalkMietausfallEur)*Math.pow(1+inp.kostensteigerung/100,t);
     const zvCf=wm-bewirtSteuerT-zinsen/12-afa/12;
-    const steuerMonat=inp.grenzsteuersatz/100*zvCf;
+    const steuerMonat=steuersatz*zvCf;
     const cfNachSteuerMonat=cfOpMonat-steuerMonat;
     series.push({jahr:buyYear+t,t,nkm,uf,wm,wertAnfang,wertEnde,wertImJahr,afa,restAnfang,restEnde,
       restAnfang1:a1[t].restAnfang,restAnfang2:a2[t].restAnfang,restEnde1:a1[t].restEnde,restEnde2:a2[t].restEnde,
@@ -452,7 +489,7 @@ function calc(input){
   const cfOperativ=warmmiete-bewirtGesamt+cfZins+cfTilg;
   const stBewirt=-(bewirtGesamt-instandEigen-kalkMietausfallEur);
   const zvCf0=warmmiete+stBewirt+cfZins-afaMonat;
-  const steuer0=inp.grenzsteuersatz/100*zvCf0;
+  const steuer0=steuersatz*zvCf0;
   const cfNachSteuer=cfOperativ-steuer0;
   const wertImJahr0=series[0].wertImJahr;
   const vermZuwachs=12*((-cfTilg)+cfNachSteuer)+wertImJahr0;
@@ -469,14 +506,14 @@ function calc(input){
   const fCfOperativ=sf.wm+fBewirt+fZins+fTilg;
   const fStBewirt=-(bewirtGesamt-instandEigen-kalkMietausfallEur)*Math.pow(1+inp.kostensteigerung/100,ty);
   const fZvCf=sf.wm+fStBewirt+fZins-sf.afa/12;
-  const fSteuer=inp.grenzsteuersatz/100*fZvCf;
+  const fSteuer=steuersatz*fZvCf;
   const fCfNachSteuer=fCfOperativ-fSteuer;
   const fBrutto=KP?(sf.nkm*12)/KP:0;
-  const zinsBreakEven=sf.restAnfang?(-(fZins-fCfNachSteuer/(1-inp.grenzsteuersatz/100)))*12/sf.restAnfang:null;
+  const zinsBreakEven=sf.restAnfang?(-(fZins-fCfNachSteuer/(1-steuersatz)))*12/sf.restAnfang:null;
   return {inp,buyYear,KP,WF,
     nk:{pct:nkPct,eur:nkEur,summePct:nkSummePct,summeEur:nkSummeEur},
     invest:{kosten:investKosten,wert:investWert,aktiviert:investAktiviert,grenze15,neuerWert},
-    afaBasis,gesamtInvest,
+    afaBasis,gesamtInvest,steuersatz,steuerStruktur:inp.steuerStruktur||'privat',afaModus:inp.afaModus||'linear',erweitert,effSteig,
     miete:{kaltGesamt,nettokaltmiete,umlSumme,warmmiete},
     bewirt:{umlSumme,instandEigen,kalkMietausfallEur,nichtUmlSumme,gesamt:bewirtGesamt,empfohleneInstand,hausgeldNichtUml:N(inp.hausgeldNichtUml),sonstigesNichtUml:N(inp.sonstigesNichtUml)},
     fin:{dl1,dl2,dl2Aktiv,dlGesamt,ek,zinsGew,tilgGew,kd1,kd2,kdGesamt,vollI,vollII},
@@ -540,6 +577,12 @@ function migrateDB(){
     if(i.dl2Aktiv==null)i.dl2Aktiv=true;
     if(i.dl1Zinsbindung==null)i.dl1Zinsbindung=0;
     if(i.dl2Zinsbindung==null)i.dl2Zinsbindung=0;
+    if(i.steuerStruktur==null)i.steuerStruktur='privat';
+    if(i.gmbhSteuersatz==null)i.gmbhSteuersatz=15.83;
+    if(i.afaModus==null)i.afaModus='linear';
+    if(i.degAfaSatz==null)i.degAfaSatz=5;
+    if(i.mietErweitert==null)i.mietErweitert=false;
+    if(!Array.isArray(i.einheiten))i.einheiten=[];
     if(i.dl1Anschlusszins==null)i.dl1Anschlusszins=4;
     if(i.dl2Anschlusszins==null)i.dl2Anschlusszins=4;
   });
@@ -701,7 +744,19 @@ const C_UML={title:'Bewirtschaftung — umlagefähig',sub:'pro Monat',fields:[{k
 const C_NICHTUML={title:'Bewirtschaftung — nicht umlagefähig',sub:'pro Monat',fields:[{k:'hausgeldNichtUml',t:'num',l:'Hausgeld (nicht umlagefähig)',u:'€',fmt:'eur'},{k:'wegRuecklage',t:'num',l:'davon WEG-Rücklage',u:'€',fmt:'eur'},{k:'instandQm',t:'num',l:'Eigene Instandhaltungsrücklage',u:'€/m²·a',fmt:'eur',hint:''},{k:'kalkMietausfall',t:'num',l:'Kalkulatorischer Mietausfall',u:'%',fmt:'pct'},{k:'sonstigesNichtUml',t:'num',l:'Sonstiges (nicht umlagefähig)',u:'€',fmt:'eur'}],out:'outBewirt'};
 const C_DL1={title:'Darlehen 1 (Hauptdarlehen)',dl:1,out:'outDl1'};
 const C_DL2={title:'Darlehen 2',sub:'optional',dl:2,out:'outFin'};
-const C_ANNAHMEN={title:'Annahmen & Steuer',fields:[{k:'afaSatz',t:'num',l:'AfA-Satz pro Jahr',u:'%',fmt:'pct'},{k:'gebaeudeAnteil',t:'num',l:'Anteil Gebäude am Kaufpreis',u:'%',fmt:'pct'},{k:'grenzsteuersatz',t:'num',l:'Persönlicher Grenzsteuersatz',u:'%',fmt:'pct'},{k:'mietsteigerung',t:'num',l:'Mietsteigerung p.a.',u:'%',fmt:'pct'},{k:'kostensteigerung',t:'num',l:'Kostensteigerung p.a.',u:'%',fmt:'pct'},{k:'wertsteigerung',t:'num',l:'Wertsteigerung p.a.',u:'%',fmt:'pct'}]};
+const C_ANNAHMEN={title:'Annahmen & Steuer',steuer:true,fields:[{k:'gebaeudeAnteil',t:'num',l:'Anteil Gebäude am Kaufpreis',u:'%',fmt:'pct'},{k:'mietsteigerung',t:'num',l:'Mietsteigerung p.a.',u:'%',fmt:'pct'},{k:'kostensteigerung',t:'num',l:'Kostensteigerung p.a.',u:'%',fmt:'pct'},{k:'wertsteigerung',t:'num',l:'Wertsteigerung p.a.',u:'%',fmt:'pct'}],out:'outSteuer'};
+function afaHeadHTML(){
+  const i=active().inputs;const am=i.afaModus||'linear';
+  let h=`<div class="field"><label>Gebäude-Art (Abschreibung)</label><div class="seg" id="afaSeg"><button type="button" data-afa="linear" class="${am!=='degressiv'?'active':''}">Bestand (linear)</button><button type="button" data-afa="degressiv" class="${am==='degressiv'?'active':''}">Neubau (degressiv)</button></div></div>`;
+  h+=fieldHTML({k:'afaSatz',t:'num',l:'Linearer AfA-Satz pro Jahr',u:'%',fmt:'pct'});
+  if(am==='degressiv')h+=fieldHTML({k:'degAfaSatz',t:'num',l:'Degressiver AfA-Satz (auf Restwert)',u:'%',fmt:'pct',hint:'Neubau: i.d.R. 5 %, Wechsel zur linearen AfA automatisch'});
+  return h;
+}
+function steuerHeadHTML(){
+  const i=active().inputs;const st=i.steuerStruktur||'privat';
+  const rate=st==='gmbh'?fieldHTML({k:'gmbhSteuersatz',t:'num',l:'VV-GmbH Steuersatz (KSt + Soli)',u:'%',fmt:'pct',hint:'i.d.R. 15,83 % (mit erweiterter Kürzung, keine Gewerbesteuer)'}):fieldHTML({k:'grenzsteuersatz',t:'num',l:'Persönlicher Grenzsteuersatz',u:'%',fmt:'pct',hint:'dein persönlicher Einkommensteuersatz'});
+  return `<div class="field"><label>Steuerliche Struktur</label><div class="seg" id="stSeg"><button type="button" data-st="privat" class="${st==='privat'?'active':''}">Privat</button><button type="button" data-st="gmbh" class="${st==='gmbh'?'active':''}">VV-GmbH</button></div></div>${rate}`;
+}
 const GROUPS=[
   {id:'allgemein',label:'Allgemein',cards:[C_OBJEKT]},
   {id:'nebenkosten',label:'Kaufnebenkosten',cards:[C_NK,C_INVEST]},
@@ -714,25 +769,55 @@ const GROUPS=[
 let einGroup='allgemein';
 function fieldHTML(f){
   const inp=active().inputs;let val=inp[f.k]!=null?inp[f.k]:DEFAULTS[f.k];
+  if(inp.mietErweitert&&f.k==='wohnflaeche'){const wf=sum((inp.einheiten||[]).map(u=>N(u.flaeche)));return `<div class="field"><label>${f.l}</label><div class="inp" style="opacity:.65"><input type="text" value="${FMT.qm.init(wf)}" disabled><span class="unit">m²</span></div><div class="hint">= Summe der Einheiten (erweiterter Modus)</div></div>`;}
+  if(inp.mietErweitert&&f.k==='mietsteigerung'){const es=calc(activeInputs()).effSteig;return `<div class="field"><label>${f.l}</label><div class="inp" style="opacity:.65"><input type="text" value="${FMT.pct.init(es)}" disabled><span class="unit">%</span></div><div class="hint">= gewichtetes Mittel der Einheiten</div></div>`;}
   if(f.t==='text')return `<div class="field"><label>${f.l}</label><div class="inp"><input type="text" data-key="${f.k}" value="${(val||'').toString().replace(/"/g,'&quot;')}"></div>${f.hint?`<div class="hint">${f.hint}</div>`:''}</div>`;
   if(f.t==='date')return `<div class="field"><label>${f.l}</label><div class="inp"><input type="date" data-key="${f.k}" value="${val}"></div></div>`;
   const fmt=f.fmt||'num';
   return `<div class="field"><label>${f.l}</label><div class="inp"><input type="text" inputmode="decimal" data-key="${f.k}" data-fmt="${fmt}" value="${FMT[fmt].init(val)}"><span class="unit">${f.u||''}</span></div>${f.hint!=null?`<div class="hint" data-hint="${f.k}">${f.hint}</div>`:''}</div>`;
 }
+function einheitHTML(u,idx){
+  const modus=u.modus==='qm'?'qm':'gesamt';
+  return `<div class="card" style="background:var(--surface-2);padding:12px;margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <input type="text" data-u="${idx}" data-uf="name" value="${(u.name||'').replace(/"/g,'&quot;')}" style="font-weight:600;border:none;background:transparent;outline:none;width:75%">
+      <button class="del" data-delu="${idx}">×</button></div>
+    <div class="field-row">
+      <div class="field" style="margin-bottom:8px"><label>Vermietbare Fläche</label><div class="inp"><input type="text" inputmode="decimal" data-u="${idx}" data-uf="flaeche" data-fmt="qm" value="${FMT.qm.init(u.flaeche)}"><span class="unit">m²</span></div></div>
+      <div class="field" style="margin-bottom:8px"><label>Mietsteigerung p.a.</label><div class="inp"><input type="text" inputmode="decimal" data-u="${idx}" data-uf="steigerung" data-fmt="pct" value="${FMT.pct.init(u.steigerung)}"><span class="unit">%</span></div></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Kaltmiete pro Monat</label>
+      <div style="display:flex;gap:8px">
+        <div class="seg" data-useg="${idx}" style="flex:0 0 auto">
+          <button type="button" data-u="${idx}" data-um="gesamt" class="${modus==='gesamt'?'active':''}">gesamt</button>
+          <button type="button" data-u="${idx}" data-um="qm" class="${modus==='qm'?'active':''}">pro m²</button>
+        </div>
+        <div class="inp" style="flex:1"><input type="text" inputmode="decimal" data-u="${idx}" data-uf="betrag" data-fmt="eur" value="${FMT.eur.init(u.betrag)}"><span class="unit">${modus==='qm'?'€/m²':'€'}</span></div>
+      </div></div>
+  </div>`;
+}
 function mieteCardHTML(){
-  const i=active().inputs;const modus=i.mietModus||'qm';
-  const betrag=i.mietBetrag!=null?i.mietBetrag:(i.mietProQm!=null?i.mietProQm:11);
-  const unit=modus==='qm'?'€/m²':(modus==='jahr'?'€/Jahr':'€/Monat');
-  const lab=modus==='qm'?'Kaltmiete pro m² · Monat':(modus==='jahr'?'Kaltmiete gesamt · Jahr':'Kaltmiete gesamt · Monat');
-  return `<div class="field"><label>Eingabe-Art der Kaltmiete</label>
-     <div class="seg" id="mietSeg">
-       <button type="button" data-modus="qm" class="${modus==='qm'?'active':''}">pro m²</button>
-       <button type="button" data-modus="monat" class="${modus==='monat'?'active':''}">Monat ges.</button>
-       <button type="button" data-modus="jahr" class="${modus==='jahr'?'active':''}">Jahr ges.</button>
-     </div></div>
-   <div class="field"><label id="mietLbl">${lab}</label><div class="inp"><input type="text" inputmode="decimal" id="mietBetrag" data-fmt="eur" value="${FMT.eur.init(betrag)}"><span class="unit" id="mietUnit">${unit}</span></div><div class="hint" id="mietHint"></div></div>
-   ${fieldHTML({k:'stellplatzMiete',t:'num',l:'Stellplätze (Miete / Monat)',u:'€',fmt:'eur'})}
-   ${fieldHTML({k:'sonstigesMiete',t:'num',l:'Sonstiges (Miete / Monat)',u:'€',fmt:'eur'})}`;
+  const i=active().inputs;const erw=!!i.mietErweitert;
+  let h=`<label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:14px"><input type="checkbox" id="mietErwToggle" ${erw?'checked':''}> Erweiterter Modus (mehrere Einheiten)</label>`;
+  if(!erw){
+    const modus=i.mietModus||'qm';
+    const betrag=i.mietBetrag!=null?i.mietBetrag:(i.mietProQm!=null?i.mietProQm:11);
+    const unit=modus==='qm'?'€/m²':(modus==='jahr'?'€/Jahr':'€/Monat');
+    const lab=modus==='qm'?'Kaltmiete pro m² · Monat':(modus==='jahr'?'Kaltmiete gesamt · Jahr':'Kaltmiete gesamt · Monat');
+    h+=`<div class="field"><label>Eingabe-Art der Kaltmiete</label>
+       <div class="seg" id="mietSeg">
+         <button type="button" data-modus="qm" class="${modus==='qm'?'active':''}">pro m²</button>
+         <button type="button" data-modus="monat" class="${modus==='monat'?'active':''}">Monat ges.</button>
+         <button type="button" data-modus="jahr" class="${modus==='jahr'?'active':''}">Jahr ges.</button>
+       </div></div>
+     <div class="field"><label id="mietLbl">${lab}</label><div class="inp"><input type="text" inputmode="decimal" id="mietBetrag" data-fmt="eur" value="${FMT.eur.init(betrag)}"><span class="unit" id="mietUnit">${unit}</span></div><div class="hint" id="mietHint"></div></div>`;
+  } else {
+    const list=(i.einheiten||[]).map((u,idx)=>einheitHTML(u,idx)).join('');
+    h+=`<div id="einheitenList">${list}</div><button class="add-row" id="addEinheit">+ Einheit hinzufügen</button><div class="hint" id="mietHint" style="margin-top:10px"></div>`;
+  }
+  h+=fieldHTML({k:'stellplatzMiete',t:'num',l:'Stellplätze (Miete / Monat)',u:'€',fmt:'eur'});
+  h+=fieldHTML({k:'sonstigesMiete',t:'num',l:'Sonstiges (Miete / Monat)',u:'€',fmt:'eur'});
+  return h;
 }
 function dlCardHTML(n){
   const i=active().inputs;
@@ -767,11 +852,13 @@ function renderInputs(){
     if(c.invest){html+=`<div id="invTable"></div>`;}
     else if(c.miete){html+=mieteCardHTML();}
     else if(c.dl){html+=dlCardHTML(c.dl);}
-    else if(c.fields){
-      const nums=c.fields;let i=0;
-      while(i<nums.length){const f=nums[i];
-        if((f.t==='num')&&nums[i+1]&&nums[i+1].t==='num'&&nums.length>3&&f.k!=='kaufpreis'){html+=`<div class="field-row">${fieldHTML(f)}${fieldHTML(nums[i+1])}</div>`;i+=2;}
-        else{html+=fieldHTML(f);i++;}}
+    else{
+      if(c.steuer)html+=steuerHeadHTML()+afaHeadHTML();
+      if(c.fields){const nums=c.fields;let i=0;
+        while(i<nums.length){const f=nums[i];
+          if((f.t==='num')&&nums[i+1]&&nums[i+1].t==='num'&&nums.length>3&&f.k!=='kaufpreis'){html+=`<div class="field-row">${fieldHTML(f)}${fieldHTML(nums[i+1])}</div>`;i+=2;}
+          else{html+=fieldHTML(f);i++;}}
+      }
     }
     if(c.out)html+=`<div data-out="${c.out}" style="margin-top:12px"></div>`;
     html+=`</div>`;
@@ -780,6 +867,10 @@ function renderInputs(){
   if(group.cards.some(c=>c.invest))renderInvTable();
   if(group.cards.some(c=>c.miete))wireMiete();
   group.cards.forEach(c=>{if(c.dl)wireDl(c.dl);});
+  const sseg=document.getElementById('stSeg');
+  if(sseg)sseg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{active().inputs.steuerStruktur=b.dataset.st;scheduleSave();renderInputs();recompute();}));
+  const aseg=document.getElementById('afaSeg');
+  if(aseg)aseg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{active().inputs.afaModus=b.dataset.afa;scheduleSave();renderInputs();recompute();}));
   wireFields(host);
   const bl=document.getElementById('blSelect');
   if(bl)bl.addEventListener('change',()=>{const p=BUNDESLAND[bl.value];if(p!=null){active().inputs.grunderwerbPct=p;const f=document.querySelector('input[data-key="grunderwerbPct"]');if(f)f.value=FMT.pct.init(p);scheduleSave();recompute();}});
@@ -796,8 +887,18 @@ function wireFields(host){
   });
 }
 function wireMiete(){
-  const seg=document.getElementById('mietSeg');if(!seg)return;
-  seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+  const tog=document.getElementById('mietErwToggle');
+  if(tog)tog.addEventListener('change',()=>{
+    const i=active().inputs;i.mietErweitert=tog.checked;
+    if(i.mietErweitert&&(!i.einheiten||!i.einheiten.length)){
+      const WF=N(i.wohnflaeche)||1;const modus=i.mietModus||'qm';const b=N(i.mietBetrag!=null?i.mietBetrag:i.mietProQm);
+      const monat=modus==='monat'?b:(modus==='jahr'?b/12:b*WF);
+      i.einheiten=[{name:'Wohnung 1',modus:'gesamt',betrag:Math.round(monat*100)/100,flaeche:WF,steigerung:N(i.mietsteigerung)}];
+    }
+    scheduleSave();renderInputs();recompute();
+  });
+  const seg=document.getElementById('mietSeg');
+  if(seg)seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
     const i=active().inputs;const oldModus=i.mietModus||'qm';const WF=N(i.wohnflaeche)||1;
     const oldBetrag=N(i.mietBetrag!=null?i.mietBetrag:i.mietProQm);
     const monat=oldModus==='monat'?oldBetrag:(oldModus==='jahr'?oldBetrag/12:oldBetrag*WF);
@@ -808,6 +909,22 @@ function wireMiete(){
   const be=document.getElementById('mietBetrag');
   if(be){be.addEventListener('input',()=>{active().inputs.mietBetrag=parseDE(be.value);reformatLive(be,'eur');const i=active().inputs;const modus=i.mietModus||'qm';const WF=N(i.wohnflaeche)||1;const b=N(i.mietBetrag);const monat=modus==='monat'?b:(modus==='jahr'?b/12:b*WF);i.mietProQm=monat/WF;scheduleSave();recompute();});
     be.addEventListener('blur',()=>{be.value=FMT.eur.init(active().inputs.mietBetrag);});}
+  // Einheiten
+  const add=document.getElementById('addEinheit');
+  if(add)add.addEventListener('click',()=>{const i=active().inputs;i.einheiten=i.einheiten||[];i.einheiten.push({name:'Wohnung '+(i.einheiten.length+1),modus:'gesamt',betrag:500,flaeche:50,steigerung:N(i.mietsteigerung)||2});scheduleSave();renderInputs();recompute();});
+  document.querySelectorAll('[data-delu]').forEach(el=>el.addEventListener('click',()=>{active().inputs.einheiten.splice(+el.dataset.delu,1);scheduleSave();renderInputs();recompute();}));
+  document.querySelectorAll('[data-useg] button').forEach(b=>b.addEventListener('click',()=>{
+    const idx=+b.dataset.u;const u=active().inputs.einheiten[idx];const nm=b.dataset.um;const fl=N(u.flaeche)||1;
+    const monat=u.modus==='qm'?N(u.betrag)*fl:N(u.betrag);
+    u.modus=nm;u.betrag=Math.round((nm==='qm'?monat/fl:monat)*100)/100;
+    scheduleSave();renderInputs();recompute();
+  }));
+  document.querySelectorAll('input[data-u][data-uf]').forEach(el=>{
+    el.addEventListener('input',()=>{const idx=+el.dataset.u,f=el.dataset.uf;const u=active().inputs.einheiten[idx];
+      if(f==='name')u[f]=el.value;else{u[f]=parseDE(el.value);if(el.dataset.fmt)reformatLive(el,el.dataset.fmt);}
+      scheduleSave();recompute();});
+    if(el.dataset.fmt)el.addEventListener('blur',()=>{el.value=FMT[el.dataset.fmt].init(active().inputs.einheiten[+el.dataset.u][el.dataset.uf]);});
+  });
 }
 function wireDl(n){
   if(n===2){const a=document.getElementById('dl2Aktiv');if(a)a.addEventListener('change',()=>{active().inputs.dl2Aktiv=a.checked;scheduleSave();renderInputs();recompute();});}
@@ -858,10 +975,34 @@ function renderEingabenOut(m){
   setOut('outFin',SR('Darlehenssumme gesamt',fmtEur(m.fin.dlGesamt))+SR('Eigenkapital',fmtEur(m.fin.ek))+SR('Zinssatz gewichtet',fmtPct(m.fin.zinsGew,2))+SR('Tilgung gewichtet',fmtPct(m.fin.tilgGew,2))+SRT('Kapitaldienst / Monat',fmtEur(m.fin.kdGesamt)));
   const h=document.querySelector('[data-hint="instandQm"]');if(h)h.textContent=`empfohlen ≈ ${fmtEur(m.bewirt.empfohleneInstand)}/m²·a`;
   const mh=document.getElementById('mietHint');
-  if(mh)mh.textContent=`= ${fmtEur(m.miete.kaltGesamt)}/Monat  ·  ${fmtEur(m.miete.kaltGesamt*12)}/Jahr  ·  ${fmtEur(m.WF?m.miete.kaltGesamt/m.WF:0,2)}/m²`;
+  if(mh){if(m.erweitert)mh.textContent=`Gesamt-Kaltmiete ${fmtEur(m.miete.kaltGesamt)}/Monat · Fläche ${fmtNum(m.WF,0)} m² · ⌀ Mietsteigerung ${fmtPct(m.effSteig/100,2)}`;
+    else mh.textContent=`= ${fmtEur(m.miete.kaltGesamt)}/Monat  ·  ${fmtEur(m.miete.kaltGesamt*12)}/Jahr  ·  ${fmtEur(m.WF?m.miete.kaltGesamt/m.WF:0,2)}/m²`;}
   const KP=m.KP||1;
   const d1h=document.getElementById('dl1BetragHint');if(d1h)d1h.textContent=`= ${fmtEur(m.fin.dl1)} · ${fmtPct(m.fin.dl1/KP,1)} vom Kaufpreis`;
   const d2h=document.getElementById('dl2BetragHint');if(d2h)d2h.textContent=`= ${fmtEur(m.fin.dl2)} · ${fmtPct(m.fin.dl2/KP,1)} vom Kaufpreis`;
+  if(document.querySelector('[data-out="outSteuer"]'))setOut('outSteuer',steuerVergleich(active().inputs,m.steuerStruktur));
+}
+function steuerVergleich(baseInp,aktiv){
+  const pv=calc(Object.assign({},baseInp,{steuerStruktur:'privat'}));
+  const gm=calc(Object.assign({},baseInp,{steuerStruktur:'gmbh'}));
+  const row=(lab,pVal,gVal,pNum,gNum,higher)=>{
+    let pc='',gc='';
+    if(pNum!=null){const better=higher?(pNum>gNum?'p':(gNum>pNum?'g':'')):(pNum<gNum?'p':(gNum<pNum?'g':''));if(better==='p')pc='pos';if(better==='g')gc='pos';}
+    return `<tr><td style="text-align:left">${lab}</td><td class="${pc}">${pVal}</td><td class="${gc}">${gVal}</td></tr>`;
+  };
+  const diffCf=(gm.kpiNow.cfNachSteuer-pv.kpiNow.cfNachSteuer);
+  const winner=Math.abs(diffCf)<0.5?'etwa gleichauf':(diffCf>0?'VV-GmbH':'Privat');
+  const head=`<div style="font-weight:700;font-size:13px;margin:4px 0 8px">Entscheidungshilfe: Privat vs. VV-GmbH</div>`;
+  let tbl=`<table class="ts" style="font-size:12.5px"><thead><tr><th style="text-align:left">Kennzahl</th><th>Privat (${fmtNum(pv.steuersatz*100,0)} %)</th><th>VV-GmbH (${fmtNum(gm.steuersatz*100,2)} %)</th></tr></thead><tbody>`;
+  tbl+=row('Steuer / Monat',fmtEur(pv.kpiNow.steuer0),fmtEur(gm.kpiNow.steuer0),pv.kpiNow.steuer0,gm.kpiNow.steuer0,false);
+  tbl+=row('Cashflow n. St. / Monat',fmtEur(pv.kpiNow.cfNachSteuer),fmtEur(gm.kpiNow.cfNachSteuer),pv.kpiNow.cfNachSteuer,gm.kpiNow.cfNachSteuer,true);
+  tbl+=row('Vermögenszuwachs p.a.',fmtEur(pv.kpiNow.vermZuwachs),fmtEur(gm.kpiNow.vermZuwachs),pv.kpiNow.vermZuwachs,gm.kpiNow.vermZuwachs,true);
+  tbl+=row('Eigenkapitalrendite',fmtPct(pv.kpiNow.ekRendite,1),fmtPct(gm.kpiNow.ekRendite,1),pv.kpiNow.ekRendite,gm.kpiNow.ekRendite,true);
+  tbl+=row('Cashflow n. St. '+gm.kpiFuture.jahr,fmtEur(pv.kpiFuture.cfNachSteuer),fmtEur(gm.kpiFuture.cfNachSteuer),pv.kpiFuture.cfNachSteuer,gm.kpiFuture.cfNachSteuer,true);
+  tbl+=`</tbody></table>`;
+  const fazit=`<div class="sumrow total"><span class="k">Laufender Vorteil / Monat</span><span class="v ${diffCf>=0?'pos':'neg'}">${winner==='etwa gleichauf'?'≈ 0 €':(winner+' +'+fmtEur(Math.abs(diffCf)))}</span></div>`;
+  const note=`<div class="hint" style="margin-top:10px;line-height:1.6">Vereinfachter Vergleich der <b>laufenden Besteuerung</b>. Nicht enthalten: Ausschüttung an dich (Kapitalertragsteuer), Gründungs-/laufende GmbH-Kosten (Steuerberater, Jahresabschluss), steuerfreier Verkauf nach 10 Jahren (privat) vs. stets steuerpflichtiger Verkauf in der GmbH. Keine Steuerberatung.</div>`;
+  return head+`<div class="tbl-scroll">`+tbl+`</div>`+fazit+note;
 }
 function renderEinStrip(m){
   const host=document.getElementById('einKpiStrip');if(!host)return;
@@ -966,7 +1107,7 @@ function recompute(){
   if(currentView==='bank')renderBank(MODEL);
   if(currentView==='szenario')renderScenario();
   document.getElementById('dashTitle').textContent=active().name;
-  document.getElementById('dashSub').textContent=`${active().inputs.address||''} · ${fmtEur(MODEL.KP)} · ${fmtNum(MODEL.WF)} m² · ${fmtPct(MODEL.kpiNow.brutto,2)} Bruttorendite`;
+  document.getElementById('dashSub').textContent=`${active().inputs.address||''} · ${fmtEur(MODEL.KP)} · ${fmtNum(MODEL.WF)} m² · ${fmtPct(MODEL.kpiNow.brutto,2)} Bruttorendite · Steuer: ${MODEL.steuerStruktur==='gmbh'?'VV-GmbH':'Privat'}`;
   document.getElementById('bankSub').textContent='Investitionsübersicht für '+(active().inputs.address||active().name);
 }
 function syncDashYear(){
